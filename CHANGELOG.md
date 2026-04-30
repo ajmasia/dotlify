@@ -6,6 +6,20 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.5.0] — 2026-04-30
+
+### Added
+- `lib/repo.sh`: `repo::resolve_dir` now reads `dir=` from `~/.config/dots/config` as fallback before `~/.dotfiles`. Precedence: `--dir` > `$DOTS_DIR` > config file > `~/.dotfiles`.
+- `lib/profile.sh`: `profile::dir`, `profile::load`, `profile::exists` — read `<DOTS_DIR>/profiles/<name>.txt`, strip comments and blank lines.
+- `dots install --profile <name>`: expands to the listed packages and installs them.
+- `dots remove --profile <name>`: expands to the listed packages and removes them.
+- `dots --dry-run install --profile <name>`: resolves profile and simulates install without touching disk.
+- `dots status`: reports active profile name or `(no active profile)` per-invocation.
+- `locales/en.sh`, `locales/es.sh`: Phase 5 `MSG_PROFILE_*` and `MSG_STATUS_PROFILE` / `MSG_STATUS_NO_PROFILE` strings.
+- `tests/lib/repo.bats`: tests for `dir=` config file support in `repo::resolve_dir`.
+- `tests/lib/profile.bats`: unit tests for `profile::load` / `profile::exists`.
+- `tests/cmd/profile.bats`: integration tests — install/remove/dry-run with profile, missing profile error, status with/without profile.
+
 ## [0.4.0] — 2026-04-30
 
 ### Added
