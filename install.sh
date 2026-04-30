@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 set -euo pipefail
 
+OPENDOTS_REPO="https://github.com/ajmasia/opendots"
+OPENDOTS_CLONE_DIR="${HOME}/.local/share/opendots"
+
 # Override path for testing
 _OS_RELEASE="${_OS_RELEASE:-/etc/os-release}"
 
@@ -144,6 +147,30 @@ install::deps() {
 }
 
 # --------------------------------------------------------------------------- #
+# Git / remote clone                                                           #
+# --------------------------------------------------------------------------- #
+
+install::check_git() {
+  if ! command -v git &>/dev/null; then
+    printf 'Error: git is required to install OpenDots. Install it and re-run.\n' >&2
+    exit 4
+  fi
+}
+
+# Clone or pull the repo; prints clone_dir to stdout, progress to stderr.
+install::clone_or_update() {
+  local dest="$OPENDOTS_CLONE_DIR"
+  if [[ -d "${dest}/.git" ]]; then
+    printf 'Updating existing clone at %s ...\n' "$dest" >&2
+    git -C "$dest" pull --ff-only >&2
+  else
+    printf 'Cloning OpenDots to %s ...\n' "$dest" >&2
+    git clone "$OPENDOTS_REPO" "$dest" >&2
+  fi
+  printf '%s' "$dest"
+}
+
+# --------------------------------------------------------------------------- #
 # Installation steps                                                           #
 # --------------------------------------------------------------------------- #
 
@@ -202,7 +229,12 @@ install::main() {
   done
 
   local clone_dir
-  clone_dir="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+  if [[ -z "${BASH_SOURCE[0]:-}" ]] || ! [[ -f "${BASH_SOURCE[0]:-}" ]]; then
+    install::check_git
+    clone_dir="$(install::clone_or_update)"
+  else
+    clone_dir="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+  fi
 
   install::check_bash
   install::deps "$yes"
@@ -212,6 +244,6 @@ install::main() {
   install::post_install
 }
 
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]] || [[ -z "${BASH_SOURCE[0]:-}" ]]; then
   install::main "$@"
 fi

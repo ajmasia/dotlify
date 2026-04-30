@@ -26,13 +26,22 @@ Global flags: `--profile <name>`, `--dir <path>`, `--dry-run`, `--no-color`, `--
 
 ## Installation
 
+### Quick install
+
 ```bash
-git clone <repo-url> ~/.local/share/opendots
-cd ~/.local/share/opendots
-bash install.sh
+curl -fsSL https://raw.githubusercontent.com/ajmasia/opendots/main/install.sh | bash
 ```
 
-> The clone path must remain stable — `~/.local/bin/dots` is a symlink into it. Updates are a `git pull`.
+The script clones OpenDots to `~/.local/share/opendots`, symlinks `dots` into `~/.local/bin`, and installs shell completions.
+
+### Manual install
+
+```bash
+git clone https://github.com/ajmasia/opendots ~/.local/share/opendots
+bash ~/.local/share/opendots/install.sh
+```
+
+> The clone path must remain stable — `~/.local/bin/dots` is a symlink into it. Updates are a `git pull` inside the clone.
 
 ## Development
 

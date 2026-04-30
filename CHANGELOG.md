@@ -6,6 +6,12 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.1] — 2026-04-30
+
+### Added
+- `install.sh`: curl-pipe support — when run via `curl -fsSL URL | bash`, the script detects it is not executing from a local file, checks for `git`, clones the repo to `~/.local/share/opendots` (or pulls if the clone already exists), and continues with the normal installation flow.
+- `README.md`: Quick install section with `curl | bash` one-liner; manual install section with explicit clone URL.
+
 ## [0.7.0] — 2026-04-30
 
 ### Added
