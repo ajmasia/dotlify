@@ -6,6 +6,15 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.2.0] — 2026-04-30
+
+### Added
+- `lib/theme.sh`: Catppuccin Mocha palette as 24-bit truecolor escapes; semantic role helpers (`theme::accent`, `theme::text`, `theme::subtext`, `theme::success`, `theme::warning`, `theme::error`, `theme::info`, `theme::reset`); `theme::supports_color` with `THEME_COLORS_ENABLED` flag; honors `NO_COLOR` and `DOTS_NO_COLOR`.
+- `lib/ui.sh`: typed-prefix message printers (`ui::info`, `ui::warn`, `ui::error`, `ui::step`, `ui::ok`) with semantic color on prefix and Mocha Text on body; `ui::banner` with Figlet + Mauve color and plain-text fallback.
+- `tests/lib/theme.bats`: color emission, `NO_COLOR`, `DOTS_NO_COLOR`, non-TTY tests.
+- `tests/lib/ui.bats`: prefix format, stderr routing, color vs no-color, banner fallback tests.
+- Makefile `test` target now uses `bats --recursive` to cover subdirectories.
+
 ## [0.1.0] — 2026-04-30
 
 ### Added
