@@ -3,7 +3,7 @@
 
 # Resolve the dotfiles directory with precedence:
 #   --dir flag (DOTS_DIR set by args parser) > DOTS_DIR env var >
-#   dir= in ~/.config/dots/config > ~/.dotfiles
+#   dir= in ~/.config/opendots/config > ~/.dotfiles
 # Prints the resolved path; aborts with exit 1 if not found.
 repo::resolve_dir() {
   local dir="${DOTS_DIR:-}"
@@ -14,6 +14,7 @@ repo::resolve_dir() {
       line="$(grep -m1 '^dir=' "$config_file" 2>/dev/null || true)"
       if [[ -n "$line" ]]; then
         local candidate="${line#dir=}"
+        candidate="${candidate/#\~/$HOME}"
         if [[ -d "$candidate" ]]; then
           dir="$candidate"
         fi

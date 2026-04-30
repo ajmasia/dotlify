@@ -12,6 +12,7 @@ _opendots_resolve_dir() {
       line="$(grep -m1 '^dir=' "$config_file" 2>/dev/null || true)"
       if [[ -n "$line" ]]; then
         dir="${line#dir=}"
+        dir="${dir/#\~/$HOME}"
         [[ -d "$dir" ]] || dir=""
       fi
     fi

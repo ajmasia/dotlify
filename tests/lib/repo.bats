@@ -45,6 +45,14 @@ teardown() {
   rm -rf "$config_dir"
 }
 
+@test "repo::resolve_dir expands leading ~ in dir= config value" {
+  mkdir -p "${HOME}/dotfiles-tilde"
+  mkdir -p "${HOME}/.config/opendots"
+  printf 'dir=~/dotfiles-tilde\n' >"${HOME}/.config/opendots/config"
+  result="$(repo::resolve_dir)"
+  [[ "$result" == "${HOME}/dotfiles-tilde" ]]
+}
+
 @test "repo::resolve_dir falls back to ~/.dotfiles when no config and DOTS_DIR unset" {
   mkdir -p "${HOME}/.dotfiles"
   result="$(repo::resolve_dir)"

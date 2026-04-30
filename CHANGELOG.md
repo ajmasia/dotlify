@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.4] — 2026-04-30
+
+### Fixed
+- `dir=` in `~/.config/opendots/config` now accepts both `~`-relative paths (`~/dotfiles`) and absolute paths (`/home/user/dotfiles`). Leading `~` is expanded to `$HOME` when reading the config value in `repo.sh` and both completion files.
+
 ## [0.7.3] — 2026-04-30
 
 ### Changed
