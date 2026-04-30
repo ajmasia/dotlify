@@ -2,6 +2,60 @@
 # shellcheck shell=bash
 
 cmd_adopt::run() {
+  local -a pkgs=("$@")
+
+  if [[ ${#pkgs[@]} -ne 1 ]]; then
+    printf '%s\n' "${MSG_HELP_ADOPT}" >&2
+    printf '%s\n' "${MSG_USAGE_HINT}" >&2
+    exit 2
+  fi
+
+  local pkg="${pkgs[0]}"
+  local dots_dir
+  dots_dir="$(repo::resolve_dir)"
+  local pkg_dir="${dots_dir}/${pkg}"
+
+  if [[ ! -d "$pkg_dir" ]]; then
+    # shellcheck disable=SC2059
+    printf "${MSG_PKG_NOT_FOUND:-Package not found: %s}\n" "$pkg" >&2
+    exit 1
+  fi
+
+  # Identify real files in $HOME that match package structure.
+  local -a to_adopt=()
+  local file rel target
+  while IFS= read -r -d '' file; do
+    rel="${file#"${pkg_dir}"/}"
+    target="${HOME}/${rel}"
+    if [[ -e "$target" && ! -L "$target" ]]; then
+      to_adopt+=("$target")
+    fi
+  done < <(find "$pkg_dir" -mindepth 1 -type f -print0 2>/dev/null)
+
+  if [[ ${#to_adopt[@]} -eq 0 ]]; then
+    # shellcheck disable=SC2059
+    ui::info "$(printf "${MSG_ADOPT_NOTHING:-Nothing to adopt for package: %s}" "$pkg")"
+    return 0
+  fi
+
+  ui::info "${MSG_ADOPT_PREVIEW}"
+  local f
+  for f in "${to_adopt[@]}"; do
+    printf '  %s\n' "$f"
+  done
+
+  if [[ "${DOTS_YES:-0}" != "1" ]]; then
+    printf '%s' "${MSG_ADOPT_CONFIRM}"
+    local answer
+    read -r answer
+    if [[ "$answer" != [Yy]* ]]; then
+      ui::info "${MSG_ADOPT_ABORTED}"
+      exit 1
+    fi
+  fi
+
+  stow -d "$dots_dir" -t "$HOME" --adopt "$pkg" \
+    2> >(while IFS= read -r line; do ui::error "$line"; done >&2)
   # shellcheck disable=SC2059
-  printf "${MSG_NOT_IMPLEMENTED}\n" "adopt"
+  ui::ok "$(printf "${MSG_ADOPT_OK:-Adopted: %s}" "$pkg")"
 }
