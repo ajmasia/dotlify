@@ -8,6 +8,13 @@ cmd_status::run() {
   # shellcheck disable=SC2059
   ui::info "$(printf "${MSG_STATUS_DOTFILES:-Dotfiles: %s}" "$dots_dir")"
 
+  if [[ -n "${DOTS_PROFILE:-}" ]]; then
+    # shellcheck disable=SC2059
+    ui::info "$(printf "${MSG_STATUS_PROFILE:-Active profile: %s}" "${DOTS_PROFILE}")"
+  else
+    ui::info "${MSG_STATUS_NO_PROFILE:-(no active profile)}"
+  fi
+
   local -a pkgs
   mapfile -t pkgs < <(repo::list_packages "$dots_dir")
 
