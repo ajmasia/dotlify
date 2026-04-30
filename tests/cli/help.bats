@@ -15,7 +15,7 @@ setup() {
 @test "dots --version exits 0 and stdout contains version" {
   run "$DOTS_BIN" --version
   [ "$status" -eq 0 ]
-  [[ "$output" == *"0.7.4"* ]]
+  [[ "$output" == *"0.7.5"* ]]
 }
 
 @test "bare dots exits 0 and shows banner" {

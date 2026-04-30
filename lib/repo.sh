@@ -49,17 +49,21 @@ repo::list_packages() {
 #   ·  not fully linked (package has no files, or some are missing)
 repo::package_status() {
   local dots_dir="$1" pkg="$2"
-  local pkg_dir="${dots_dir}/${pkg}"
+  local pkg_dir
+  pkg_dir="$(readlink -f "${dots_dir}/${pkg}")"
   local linked=0 not_linked=0 conflict=0
-  local file rel target
+  local file rel target real
 
   while IFS= read -r -d '' file; do
     rel="${file#"${pkg_dir}"/}"
     target="${HOME}/${rel}"
-    if [[ -L "$target" ]]; then
-      linked=$((linked + 1))
-    elif [[ -e "$target" ]]; then
-      conflict=$((conflict + 1))
+    if [[ -e "$target" ]]; then
+      real="$(readlink -f "$target")"
+      if [[ "$real" == "${pkg_dir}/"* ]]; then
+        linked=$((linked + 1))
+      else
+        conflict=$((conflict + 1))
+      fi
     else
       not_linked=$((not_linked + 1))
     fi

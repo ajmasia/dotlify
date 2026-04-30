@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.5] — 2026-04-30
+
+### Fixed
+- `repo::package_status` now correctly reports `✓` for packages where stow used tree folding (directory-level symlink instead of per-file symlinks). Uses `readlink -f` to check whether the resolved path falls inside the package directory, regardless of whether the symlink is on the file or on an ancestor directory.
+
 ## [0.7.4] — 2026-04-30
 
 ### Fixed
