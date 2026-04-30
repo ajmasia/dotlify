@@ -5,6 +5,7 @@
 setup_dots_dir() {
   export DOTS_DIR
   DOTS_DIR="$(mktemp -d)"
+  DOTS_DIR="$(cd "$DOTS_DIR" && pwd -P)"
   for pkg in "$@"; do
     mkdir -p "${DOTS_DIR}/${pkg}"
   done
@@ -14,6 +15,7 @@ setup_dots_dir() {
 setup_home() {
   export HOME
   HOME="$(mktemp -d)"
+  HOME="$(cd "$HOME" && pwd -P)"
 }
 
 # Create a package <pkg> with a single file <relpath> containing <content>.
@@ -39,6 +41,9 @@ assert_symlink() {
 
 # Tears down temp directories created by setup_dots_dir / setup_home.
 teardown_dirs() {
-  [[ -n "${DOTS_DIR:-}" && "$DOTS_DIR" == /tmp/* ]] && rm -rf "$DOTS_DIR"
-  [[ -n "${HOME:-}" && "$HOME" == /tmp/* ]] && rm -rf "$HOME"
+  local sys_tmp
+  sys_tmp="$(cd "${TMPDIR:-/tmp}" && pwd -P)"
+  [[ -n "${DOTS_DIR:-}" && "$DOTS_DIR" == "${sys_tmp}"/* ]] && rm -rf "$DOTS_DIR"
+  [[ -n "${HOME:-}" && "$HOME" == "${sys_tmp}"/* ]] && rm -rf "$HOME"
+  return 0
 }
