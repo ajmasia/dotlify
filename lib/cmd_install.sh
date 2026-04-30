@@ -63,7 +63,9 @@ _install_stow() {
   local -a stow_args=(-d "$dots_dir" -t "$HOME")
   if [[ "${DOTS_DRY_RUN:-0}" == "1" ]]; then
     stow_args+=(-n -v)
+    # In dry-run, stow writes planned operations to stderr — show them as info.
+    stow "${stow_args[@]}" "$pkg" 2> >(while IFS= read -r line; do ui::info "$line"; done)
+  else
+    stow "${stow_args[@]}" "$pkg" 2> >(while IFS= read -r line; do ui::error "$line"; done >&2)
   fi
-  stow_args+=("$pkg")
-  stow "${stow_args[@]}" 2> >(while IFS= read -r line; do ui::error "$line"; done >&2)
 }
