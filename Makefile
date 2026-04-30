@@ -12,6 +12,6 @@ fmt-check:
 	shfmt -d -i 2 -ci -bn $(SHELL_FILES)
 
 test:
-	bats tests/
+	bats --recursive tests/
 
 check: lint fmt-check test
