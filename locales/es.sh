@@ -12,7 +12,7 @@ MSG_NOT_IMPLEMENTED="%s: aún no implementado."
 MSG_HELP_USAGE="Uso: dots [opciones] <subcomando> [args]"
 MSG_HELP_SUBCMDS_HEADER="Subcomandos:"
 MSG_HELP_OPTS_HEADER="Opciones globales:"
-MSG_VERSION_LINE="dots %s (GPL-3.0-or-later)"
+MSG_VERSION_LINE="v%s (GPL-3.0-or-later)"
 
 # Descripciones breves de subcomandos
 MSG_SUBCMD_INSTALL="Enlaza paquetes de tu repositorio de dotfiles"
