@@ -6,6 +6,20 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.0] — 2026-04-30
+
+### Added
+- `install.sh`: bootstrap installer — detects distro (`/etc/os-release`) and maps to `apt`/`pacman`/`dnf`; detects macOS via `uname` + `brew`; checks bash ≥ 4 (exit 4) and stow ≥ 2.3.1 (exit 4); installs missing `stow`/`figlet` with y/N confirmation (`--yes` to skip); symlinks `~/.local/bin/dots → <clone>/bin/dots`; installs bash and zsh completions to XDG-standard user paths; prints post-install PATH/fpath instructions.
+- `examples/dotfiles/`: minimal reference layout with `git` and `tmux` packages and a `home` profile. Documented in `README.md`.
+- `tests/install/detect.bats`: 7 distro-detection tests with os-release fixtures (ubuntu, debian, arch, manjaro, fedora, rocky, alpine).
+- `tests/install/install.bats`: 10 tests covering compose_cmd per package manager, `--yes` flag, unrecognized-distro exit 1, bash < 4 exit 4, stow < 2.3.1 exit 4, symlink and completion installation.
+- `tests/test_helper.bash`: `EXAMPLES_DIR` constant pointing to `examples/dotfiles/`.
+
+### Fixed
+- `tests/test_helper.bash`: `setup_dots_dir` and `setup_home` now resolve temp paths to canonical form via `pwd -P` so `assert_symlink` comparisons match on macOS (where `/var → /private/var`). `teardown_dirs` uses resolved `$TMPDIR` instead of the hard-coded `/tmp` prefix so cleanup works on both platforms.
+- `completions/_dots`: `_dots "$@"` auto-call is now guarded by `(( ${+CURRENT} ))` so it only fires inside zsh's completion system, not when sourced in tests.
+- `tests/lib/i18n.bats`: `unset XDG_CONFIG_HOME` added to setup, consistent with `repo.bats` and `profile.bats`, so the test is not affected by runner environment.
+
 ## [0.6.0] — 2026-04-30
 
 ### Added
