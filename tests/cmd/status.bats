@@ -14,19 +14,26 @@ teardown() {
   teardown_dirs
 }
 
-@test "status reports pending conflicts" {
-  make_package vim .vimrc
-  printf 'existing\n' >"${HOME}/.vimrc"
-  run "$DOTS_BIN" status
-  [ "$status" -eq 0 ]
-  [[ "$output" == *"vim"* ]]
-  [[ "$output" == *"onflict"* ]] || [[ "$output" == *"Conflict"* ]]
-}
-
-@test "status lists linked packages" {
+@test "status shows [ok] for linked packages" {
   make_package vim .vimrc
   stow -d "$DOTS_DIR" -t "$HOME" vim
   run "$DOTS_BIN" status
   [ "$status" -eq 0 ]
-  [[ "$output" == *"vim"* ]]
+  [[ "$output" == *"[ok]"*"vim"* ]]
+}
+
+@test "status shows [warn] and adopt hint for conflicts" {
+  make_package vim .vimrc
+  printf 'existing\n' >"${HOME}/.vimrc"
+  run "$DOTS_BIN" status
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"[warn]"*"vim"* ]]
+  [[ "$output" == *"adopt"* ]]
+}
+
+@test "status shows [off] for unlinked packages" {
+  make_package vim .vimrc
+  run "$DOTS_BIN" status
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"[off]"*"vim"* ]]
 }

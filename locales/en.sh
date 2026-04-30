@@ -72,7 +72,8 @@ MSG_LIST_EMPTY="No packages found in %s"
 MSG_STATUS_DOTFILES="Dotfiles: %s"
 MSG_STATUS_LINKED="Linked packages (%s):"
 MSG_STATUS_CONFLICTS="Conflicts (%s):"
-MSG_STATUS_NONE="No linked packages."
+MSG_STATUS_NONE="No packages found."
+MSG_STATUS_CONFLICT_HINT="target exists, run: opendots adopt"
 
 # profile.sh
 MSG_PROFILE_NOT_FOUND="Profile not found: %s"

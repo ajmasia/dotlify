@@ -72,7 +72,8 @@ MSG_LIST_EMPTY="No se encontraron paquetes en %s"
 MSG_STATUS_DOTFILES="Dotfiles: %s"
 MSG_STATUS_LINKED="Paquetes enlazados (%s):"
 MSG_STATUS_CONFLICTS="Conflictos (%s):"
-MSG_STATUS_NONE="No hay paquetes enlazados."
+MSG_STATUS_NONE="No se encontraron paquetes."
+MSG_STATUS_CONFLICT_HINT="el destino ya existe, ejecuta: opendots adopt"
 
 # profile.sh
 MSG_PROFILE_NOT_FOUND="Perfil no encontrado: %s"

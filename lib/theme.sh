@@ -49,6 +49,10 @@ theme::info() {
   if [[ "${THEME_COLORS_ENABLED:-0}" == "1" ]]; then printf '\033[38;2;137;220;235m'; fi
 }
 
+theme::muted() {
+  if [[ "${THEME_COLORS_ENABLED:-0}" == "1" ]]; then printf '\033[38;2;108;112;134m'; fi
+}
+
 theme::reset() {
   if [[ "${THEME_COLORS_ENABLED:-0}" == "1" ]]; then printf '\033[0m'; fi
 }

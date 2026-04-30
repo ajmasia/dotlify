@@ -15,35 +15,23 @@ cmd_status::run() {
     ui::info "${MSG_STATUS_NO_PROFILE:-(no active profile)}"
   fi
 
+  printf '\n'
+
   local -a pkgs
   mapfile -t pkgs < <(repo::list_packages "$dots_dir")
 
-  local -a linked=() conflicts=()
+  if [[ ${#pkgs[@]} -eq 0 ]]; then
+    ui::info "${MSG_STATUS_NONE}"
+    return 0
+  fi
+
   local pkg marker
-  for pkg in "${pkgs[@]+"${pkgs[@]}"}"; do
+  for pkg in "${pkgs[@]}"; do
     marker="$(repo::package_status "$dots_dir" "$pkg")"
     case "$marker" in
-      ✓) linked+=("$pkg") ;;
-      !) conflicts+=("$pkg") ;;
+      ✓) ui::ok "$pkg" ;;
+      !) ui::warn "$pkg — ${MSG_STATUS_CONFLICT_HINT:-target exists, run: opendots adopt ${pkg}}" ;;
+      *) ui::off "$pkg" ;;
     esac
   done
-
-  if [[ ${#linked[@]} -eq 0 ]]; then
-    ui::info "${MSG_STATUS_NONE}"
-  else
-    # shellcheck disable=SC2059
-    ui::info "$(printf "${MSG_STATUS_LINKED:-Linked packages (%s):}" "${#linked[@]}")"
-    local p
-    for p in "${linked[@]}"; do
-      printf '  %s\n' "$p"
-    done
-  fi
-
-  if [[ ${#conflicts[@]} -gt 0 ]]; then
-    # shellcheck disable=SC2059
-    ui::warn "$(printf "${MSG_STATUS_CONFLICTS:-Conflicts (%s):}" "${#conflicts[@]}")"
-    for p in "${conflicts[@]}"; do
-      printf '  %s\n' "$p"
-    done
-  fi
 }

@@ -6,6 +6,12 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.7] — 2026-04-30
+
+### Changed
+- `list`: now shows only package names with a `-` prefix — pure inventory of the dotfiles repo, no status indicators.
+- `status`: shows all packages with `[ok]` / `[off]` / `[warn]` per package. Conflict entries include an adopt hint. Adds `ui::off` helper (muted color) for unlinked packages.
+
 ## [0.7.6] — 2026-04-30
 
 ### Changed
