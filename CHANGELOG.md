@@ -6,6 +6,18 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.0] — 2026-04-30
+
+### Added
+- `locales/en.sh` and `locales/es.sh`: all Phase 3 user-facing strings as `MSG_*` variables; both locales kept in sync.
+- `lib/i18n.sh`: `i18n::load <lang>` (sources locale file, falls back to `en`); `i18n::configured_lang` (reads `lang=` from `~/.config/dots/config`).
+- `lib/args.sh`: global flag parser (`--help`, `-h`, `--version`, `-V`, `--no-color`, `--dry-run`, `--profile`, `--dir`, `--yes`, `-y`, `--lang`); subcommand dispatcher with per-subcommand `--help` delegation and closest-match suggestion on unknown subcommand.
+- `lib/cmd_help.sh`: `cmd_help::run` (banner + full usage table), `cmd_help::show_version` (banner + version line), `cmd_help::run_subcmd` (per-subcommand usage without banner).
+- `lib/cmd_{install,remove,adopt,list,status,doctor}.sh`: not-implemented stubs for all Phase 4 subcommands.
+- `bin/dots`: main entrypoint — resolves `DOTS_LIB` from real path, checks bash ≥ 4 (exit 4), sources libraries, parses global flags, loads i18n, and dispatches.
+- `tests/lib/i18n.bats`: unit tests for `i18n::load` (en, es, unknown fallback) and `i18n::configured_lang`.
+- `tests/cli/help.bats`, `tests/cli/dispatch.bats`, `tests/cli/i18n.bats`: integration tests covering `--help`, `--version`, bare invocation, unknown subcommand/flag, `--no-color`, and `--lang` flag with Spanish/fallback behavior.
+
 ## [0.2.0] — 2026-04-30
 
 ### Added
