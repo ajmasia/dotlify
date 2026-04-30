@@ -1,0 +1,17 @@
+SHELL_FILES := bin/dots lib/*.sh install.sh tests/test_helper.bash
+
+.PHONY: lint fmt fmt-check test check
+
+lint:
+	shellcheck $(SHELL_FILES)
+
+fmt:
+	shfmt -w -i 2 -ci -bn $(SHELL_FILES)
+
+fmt-check:
+	shfmt -d -i 2 -ci -bn $(SHELL_FILES)
+
+test:
+	bats tests/
+
+check: lint fmt-check test
