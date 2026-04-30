@@ -6,6 +6,18 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.6.0] — 2026-04-30
+
+### Added
+- `completions/dots.bash`: bash tab completion — subcommands, packages, profile names, and global flags. Source in `~/.bashrc` or drop in `/etc/bash_completion.d/`.
+- `completions/_dots`: zsh tab completion with `_arguments`/`_describe` patterns. Place in an `$fpath` directory.
+- `tests/completions/bash.bats`: 12 bats tests simulating `COMP_WORDS`/`COMP_CWORD` for the bash completion function.
+- `tests/completions/zsh.bats`: zsh helper-function tests via `zsh -c`; skip cleanly when zsh is absent.
+- CI (Linux): `zsh` added to the apt install step so zsh completion tests run on Linux runners.
+
+### Fixed
+- `tests/cli/help.bats`: `--version` assertion updated to match current version.
+
 ## [0.5.0] — 2026-04-30
 
 ### Added
