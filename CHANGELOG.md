@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.7.2] — 2026-04-30
+
+### Fixed
+- `install.sh`: guard entry condition now uses `${BASH_SOURCE[0]:-}` in the equality check to avoid unbound variable error under `set -u` when piped via `curl | bash`.
+
 ## [0.7.1] — 2026-04-30
 
 ### Added
