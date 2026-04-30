@@ -84,15 +84,13 @@ _with_missing() {
 # ---------- unrecognized distro -----------------------------------------------
 
 @test "unrecognized distro exits 1 with manual-install hint" {
-  local fixture="${BATS_TEST_TMPDIR}/os-release"
-  printf 'ID=alpine\n' >"$fixture"
-
-  _with_missing "stow" \
-    run bash -c "
-      source '${BATS_TEST_DIRNAME}/../../install.sh'
-      install::missing_deps() { local -n _r=\$1; _r=(stow); }
-      _OS_RELEASE='${fixture}' install::deps 1
-    "
+  # Override both pkg_manager and missing_deps so the test is OS-independent.
+  run bash -c "
+    source '${BATS_TEST_DIRNAME}/../../install.sh'
+    install::pkg_manager() { printf 'unknown'; }
+    install::missing_deps() { local -n _r=\$1; _r=(stow); }
+    install::deps 1
+  "
   [ "$status" -eq 1 ]
   [[ "$output" == *"Install manually"* ]]
 }
