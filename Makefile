@@ -1,4 +1,4 @@
-SHELL_FILES := bin/dots lib/*.sh install.sh tests/test_helper.bash
+SHELL_FILES := bin/dots lib/*.sh install.sh tests/test_helper.bash completions/dots.bash
 
 .PHONY: lint fmt fmt-check test check
 
