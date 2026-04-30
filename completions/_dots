@@ -1,0 +1,100 @@
+#compdef dots
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Zsh tab completion for the dots command. Place this file in a directory on
+# $fpath, e.g. /usr/local/share/zsh/site-functions/_dots.
+
+_dots_resolve_dir() {
+  local dir="${DOTS_DIR:-}"
+  if [[ -z "$dir" ]]; then
+    local config_file="${XDG_CONFIG_HOME:-${HOME}/.config}/dots/config"
+    if [[ -f "$config_file" ]]; then
+      local line
+      line="$(grep -m1 '^dir=' "$config_file" 2>/dev/null || true)"
+      if [[ -n "$line" ]]; then
+        dir="${line#dir=}"
+        [[ -d "$dir" ]] || dir=""
+      fi
+    fi
+  fi
+  print "${dir:-${HOME}/.dotfiles}"
+}
+
+_dots_list_packages() {
+  local dir="$1"
+  [[ -d "$dir" ]] || return
+  local entry name
+  while IFS= read -r -d '' entry; do
+    name="${entry##*/}"
+    [[ "$name" == profiles || "$name" == .* ]] && continue
+    print "$name"
+  done < <(find "$dir" -mindepth 1 -maxdepth 1 -type d -print0 2>/dev/null | sort -z)
+}
+
+_dots_list_profiles() {
+  local dir="$1/profiles"
+  [[ -d "$dir" ]] || return
+  local f name
+  while IFS= read -r -d '' f; do
+    name="${f##*/}"
+    print "${name%.txt}"
+  done < <(find "$dir" -maxdepth 1 -name '*.txt' -print0 2>/dev/null | sort -z)
+}
+
+_dots() {
+  local state line context
+  typeset -A opt_args
+
+  local -a subcommands
+  subcommands=(
+    'install:install packages from the dotfiles repo'
+    'remove:remove installed packages'
+    'adopt:adopt existing dotfiles into the repo'
+    'list:list available packages'
+    'status:show link status of packages'
+    'doctor:check runtime dependencies'
+    'help:show help'
+  )
+
+  local -a global_opts
+  global_opts=(
+    '(--help -h)'{--help,-h}'[show help]'
+    '(--version -V)'{--version,-V}'[show version]'
+    '--no-color[disable color output]'
+    '--dry-run[show what would be done without doing it]'
+    '(--yes -y)'{--yes,-y}'[answer yes to all prompts]'
+    '--profile[activate a profile]:profile:->profile_names'
+    '--dir[dotfiles directory]:directory:_files -/'
+    '--lang[language]:lang:(en es)'
+  )
+
+  _arguments -C \
+    "${global_opts[@]}" \
+    '1:subcommand:->subcommand' \
+    '*:args:->args'
+
+  case "$state" in
+    subcommand)
+      _describe 'subcommand' subcommands
+      ;;
+    profile_names)
+      local dots_dir
+      dots_dir="$(_dots_resolve_dir)"
+      local -a profs
+      profs=("${(@f)$(_dots_list_profiles "$dots_dir")}")
+      compadd -a profs
+      ;;
+    args)
+      case "$words[2]" in
+        install | remove | adopt)
+          local dots_dir
+          dots_dir="$(_dots_resolve_dir)"
+          local -a pkgs
+          pkgs=("${(@f)$(_dots_list_packages "$dots_dir")}")
+          compadd -a pkgs
+          ;;
+      esac
+      ;;
+  esac
+}
+
+_dots "$@"
