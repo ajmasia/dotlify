@@ -5,6 +5,7 @@ setup() {
   LIB_DIR="${BATS_TEST_DIRNAME}/../../lib"
   # shellcheck source=/dev/null
   source "${LIB_DIR}/i18n.sh"
+  unset XDG_CONFIG_HOME
 }
 
 @test "i18n::load en sources locales/en.sh and MSG_* are defined" {
