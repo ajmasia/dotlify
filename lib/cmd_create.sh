@@ -17,12 +17,36 @@ _create_read_desc() {
 }
 
 cmd_create::run() {
-  if [[ $# -eq 0 ]]; then
+  local pkg="" subdir=""
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --subdir | -s)
+        shift
+        if [[ $# -eq 0 ]]; then
+          ui::error "${MSG_CREATE_SUBDIR_MISSING:---subdir / -s requires a path argument}"
+          exit 2
+        fi
+        subdir="$1"
+        shift
+        ;;
+      -*)
+        # shellcheck disable=SC2059
+        ui::error "$(printf "${MSG_UNKNOWN_FLAG:-Unknown flag: %s}" "$1")"
+        exit 2
+        ;;
+      *)
+        pkg="$1"
+        shift
+        ;;
+    esac
+  done
+
+  if [[ -z "$pkg" ]]; then
     cmd_help::run_subcmd "create"
     return 0
   fi
 
-  local pkg="$1"
   local dots_dir
   dots_dir="$(repo::resolve_dir)"
 
@@ -41,6 +65,7 @@ cmd_create::run() {
     _create_readme_template "$pkg" "$desc" >"$readme"
     [[ -f "${pkg_dir}/.stow-local-ignore" ]] \
       || printf '%s\n' '^README\.md$' >"${pkg_dir}/.stow-local-ignore"
+    [[ -n "$subdir" ]] && mkdir -p "${pkg_dir}/${subdir}"
     repo::update_readme_table "$dots_dir" "$pkg" "$desc"
     # shellcheck disable=SC2059
     ui::ok "$(printf "${MSG_CREATE_README_DONE:-README created for %s}" "$pkg")"
@@ -52,6 +77,7 @@ cmd_create::run() {
   mkdir -p "$pkg_dir"
   _create_readme_template "$pkg" "$desc" >"$readme"
   printf '%s\n' '^README\.md$' >"${pkg_dir}/.stow-local-ignore"
+  [[ -n "$subdir" ]] && mkdir -p "${pkg_dir}/${subdir}"
   repo::update_readme_table "$dots_dir" "$pkg" "$desc"
   # shellcheck disable=SC2059
   ui::ok "$(printf "${MSG_CREATE_DONE:-Package scaffolded: %s}" "$pkg")"

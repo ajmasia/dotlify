@@ -85,6 +85,30 @@ HEREDOC
   grep -q 'mypkg/README.md' "${DFY_DIR}/README.md"
 }
 
+@test "create -s creates the specified subdirectory inside the package" {
+  run "$DOTS_BIN" --yes create btop -s .config/btop
+  [ "$status" -eq 0 ]
+  [[ -d "${DFY_DIR}/btop/.config/btop" ]]
+}
+
+@test "create --subdir creates the specified subdirectory inside the package" {
+  run "$DOTS_BIN" --yes create btop --subdir .config/btop
+  [ "$status" -eq 0 ]
+  [[ -d "${DFY_DIR}/btop/.config/btop" ]]
+}
+
+@test "create -s also works when package exists without README" {
+  mkdir -p "${DFY_DIR}/btop"
+  run "$DOTS_BIN" --yes create btop -s .config/btop
+  [ "$status" -eq 0 ]
+  [[ -d "${DFY_DIR}/btop/.config/btop" ]]
+}
+
+@test "create -s without argument exits 2" {
+  run "$DOTS_BIN" --yes create btop -s
+  [ "$status" -eq 2 ]
+}
+
 @test "create does not duplicate entry in repo README" {
   cat >"${DFY_DIR}/README.md" <<'HEREDOC'
 # My Dotfiles
