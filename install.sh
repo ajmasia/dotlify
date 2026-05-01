@@ -7,6 +7,28 @@ DOTLIFY_CLONE_DIR="${HOME}/.local/share/dotlify"
 
 # Override path for testing
 _OS_RELEASE="${_OS_RELEASE:-/etc/os-release}"
+# Override uname output for testing
+_INSTALL_UNAME="${_INSTALL_UNAME:-}"
+
+# --------------------------------------------------------------------------- #
+# Portable path resolver (no readlink -f; works on GNU and BSD/macOS)         #
+# --------------------------------------------------------------------------- #
+
+_install_readlink_f() {
+  local src="$1"
+  [[ "$src" == /* ]] || src="$PWD/$src"
+  local i=0 link
+  while [[ -L "$src" && $((i++)) -lt 40 ]]; do
+    link="$(readlink "$src")"
+    [[ "$link" == /* ]] || link="$(dirname "$src")/$link"
+    src="$link"
+  done
+  if [[ -d "$src" ]]; then
+    printf '%s' "$(cd "$src" && pwd -P)"
+  else
+    printf '%s' "$(cd "$(dirname "$src")" && pwd -P)/$(basename "$src")"
+  fi
+}
 
 # --------------------------------------------------------------------------- #
 # Inline color helpers (Catppuccin Mocha — no external deps)                  #
@@ -45,6 +67,11 @@ _ui_muted() { printf '%s%s%s' "${_C_MUTED}" "$*" "${_C_RESET}"; }
 # --------------------------------------------------------------------------- #
 
 install::pkg_manager() {
+  local uname_s="${_INSTALL_UNAME:-$(uname -s)}"
+  if [[ "$uname_s" == "Darwin" ]]; then
+    printf 'brew'
+    return
+  fi
   if [[ ! -f "$_OS_RELEASE" ]]; then
     printf 'unknown'
     return
@@ -72,6 +99,7 @@ install::compose_cmd() {
     apt) printf 'sudo apt install -y stow figlet' ;;
     pacman) printf 'sudo pacman -S --noconfirm stow figlet' ;;
     dnf) printf 'sudo dnf install -y stow figlet' ;;
+    brew) printf 'brew install stow figlet' ;;
     *) printf '' ;;
   esac
 }
@@ -84,6 +112,9 @@ install::check_bash() {
   local bash_major="${_INSTALL_BASH_MAJOR:-${BASH_VERSINFO[0]}}"
   if ((bash_major < 4)); then
     _ui_error "dfy requires bash >= 4 (found: $(_ui_value "$BASH_VERSION"))"
+    if [[ "$(uname -s)" == "Darwin" ]]; then
+      _ui_info "On macOS: $(_ui_value "brew install bash")"
+    fi
     exit 4
   fi
 }
@@ -169,6 +200,7 @@ install::deps() {
     apt) sudo apt install -y stow figlet ;;
     pacman) sudo pacman -S --noconfirm stow figlet ;;
     dnf) sudo dnf install -y stow figlet ;;
+    brew) brew install stow figlet ;;
   esac
 }
 
@@ -278,7 +310,7 @@ install::main() {
     install::check_git
     clone_dir="$(install::clone_or_update)"
   else
-    clone_dir="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+    clone_dir="$(cd "$(dirname "$(_install_readlink_f "${BASH_SOURCE[0]}")")" && pwd)"
   fi
 
   install::check_bash
