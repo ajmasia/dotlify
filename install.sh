@@ -249,6 +249,8 @@ install::post_install() {
   printf '\n'
   printf '%s  %s\n' "$(_ui_muted "Update:")" "$(_ui_value "dfy update")"
   printf '%s  %s\n' "$(_ui_muted "Uninstall:")" "$(_ui_value "dfy uninstall")"
+  printf '\n'
+  _ui_step "Run 'dfy init' to create your dotfiles repository."
 }
 
 # --------------------------------------------------------------------------- #
