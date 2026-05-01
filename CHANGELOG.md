@@ -6,6 +6,21 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.11.0] — 2026-05-01
+
+### Added
+- `lib/notify.sh`: passive post-invocation check — warns about uncommitted dotfile changes or long idle periods after each `dfy` invocation, without blocking the command exit code. Configurable via `notifications`, `check_interval`, and `remind_interval` config keys.
+- `man/dfy.1`: man page in native roff format, installed to `~/.local/share/man/man1/` by `install.sh`. Preview with `make man`.
+- `docs/wiki/`: Markdown source for five wiki pages (Home, Installation, Commands, Configuration, Profiles), synced to the GitHub Wiki on every `v*` tag push via `.github/workflows/wiki.yml`.
+- Status badges in `README.md`: CI, license, shell (bash ≥ 4), platform (Linux), version.
+- `dfy init` scaffold README now includes a "Managed with Dotlify" badge (Catppuccin Mauve).
+
+### Changed
+- Project is now **Linux-only**: macOS support dropped. CI matrix reduced to `ubuntu-latest`; `install.sh` and `lib/os.sh` cleaned of Darwin/brew branches; README updated accordingly.
+
+### Fixed
+- `config::get` now always returns exit code 0, preventing spurious failures under `set -e` when a config key is absent.
+
 ## [0.10.5] — 2026-05-01
 
 ### Added
