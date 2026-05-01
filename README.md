@@ -2,6 +2,35 @@
 
 A Bash framework on top of [GNU Stow](https://www.gnu.org/software/stow/) for managing dotfiles on Linux and macOS.
 
+## Getting started
+
+After installing Dotlify, create your dotfiles repository:
+
+```bash
+dfy init
+```
+
+This creates `~/.dotfiles`, initialises a git repo, and scaffolds a few commented starter files (`bash-aliases`, `zsh-aliases`, `vim`). Link it to a remote when ready:
+
+```bash
+cd ~/.dotfiles
+git remote add origin <your-remote-url>
+git push -u origin main
+```
+
+Then adopt your existing dotfiles or apply packages:
+
+```bash
+dfy adopt vim       # absorb existing ~/.vimrc into the vim package
+dfy apply vim       # link the vim package back into $HOME
+```
+
+Use `--bare` to skip the scaffold and create only the git repo:
+
+```bash
+dfy init --bare --dir ~/my-dots
+```
+
 ## Requirements
 
 - Bash ≥ 4.0
