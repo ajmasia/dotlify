@@ -1,5 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+# Minimal dotfiles repo fixture shared across test suites.
+# shellcheck disable=SC2034
+FIXTURES_DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")/fixtures/dotfiles" && pwd)"
+
 # Creates a temporary DFY_DIR with optional package skeletons.
 # Usage: setup_dots_dir [pkg...]
 setup_dots_dir() {

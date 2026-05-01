@@ -1,0 +1,3 @@
+# vim
+
+Basic Vim settings.

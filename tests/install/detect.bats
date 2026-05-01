@@ -21,7 +21,8 @@ _fixture() {
 }
 
 # Wrapper so bats `run` can call install::pkg_manager with a custom os-release.
-_pkg_manager_for() { _OS_RELEASE="${1}" install::pkg_manager; }
+# Forces _INSTALL_UNAME=Linux so the macOS early-return is bypassed.
+_pkg_manager_for() { _OS_RELEASE="${1}" _INSTALL_UNAME="Linux" install::pkg_manager; }
 
 @test "macOS (Darwin) -> brew" {
   run _pkg_manager_darwin
