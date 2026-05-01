@@ -1,6 +1,30 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # shellcheck shell=bash
 
+# True when running on macOS.
+os::is_macos() { [[ "$(uname -s)" == "Darwin" ]]; }
+
+# True when running on Linux.
+os::is_linux() { [[ "$(uname -s)" == "Linux" ]]; }
+
+# Resolve canonical path following all symlinks.
+# Equivalent to readlink -f on GNU; works on BSD/macOS without extra deps.
+os::readlink_f() {
+  local src="$1"
+  [[ "$src" == /* ]] || src="$PWD/$src"
+  local i=0 link
+  while [[ -L "$src" && $((i++)) -lt 40 ]]; do
+    link="$(readlink "$src")"
+    [[ "$link" == /* ]] || link="$(dirname "$src")/$link"
+    src="$link"
+  done
+  if [[ -d "$src" ]]; then
+    printf '%s' "$(cd "$src" && pwd -P)"
+  else
+    printf '%s' "$(cd "$(dirname "$src")" && pwd -P)/$(basename "$src")"
+  fi
+}
+
 # Return one of: debian ubuntu arch fedora rhel unknown.
 # Reads /etc/os-release; falls back to "unknown" on missing file.
 os::distro_id() {
