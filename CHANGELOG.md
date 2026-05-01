@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.11.12] — 2026-05-01
+
+### Fixed
+- `cmd_help.sh`: `dfy --help` usage line was hardcoded in English; now uses `MSG_HELP_USAGE` so it honours the active locale (e.g. `Uso:` in Spanish).
+
 ## [0.11.11] — 2026-05-01
 
 ### Changed
