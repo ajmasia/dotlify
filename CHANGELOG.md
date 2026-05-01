@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.10.5] — 2026-05-01
+
+### Added
+- `dfy create <pkg> -s <path>` / `--subdir <path>`: creates the specified subdirectory inside the new package (e.g. `-s .config/btop` → `btop/.config/btop/`). Accepts nested paths and works both for new packages and for existing packages without a README.
+
 ## [0.10.4] — 2026-05-01
 
 ### Added
