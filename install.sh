@@ -228,6 +228,18 @@ install::completions() {
   _ui_ok "Zsh completion:  $(_ui_value "${zsh_dir}/_dfy")"
 }
 
+install::man_page() {
+  local clone_dir="$1"
+  local man_src="${clone_dir}/man/dfy.1"
+  if [[ ! -f "$man_src" ]]; then
+    return 0
+  fi
+  local man_dir="$HOME/.local/share/man/man1"
+  mkdir -p "$man_dir"
+  install -m644 "$man_src" "${man_dir}/dfy.1"
+  _ui_ok "Man page:  $(_ui_value "${man_dir}/dfy.1")"
+}
+
 install::post_install() {
   local bin_dir="$HOME/.local/bin"
   _ui_ok "Dotlify installed successfully!"
@@ -274,6 +286,7 @@ install::main() {
   install::check_stow
   install::link_binary "$clone_dir"
   install::completions "$clone_dir"
+  install::man_page "$clone_dir"
   install::post_install
 }
 

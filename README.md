@@ -61,6 +61,8 @@ dfy uninstall                Remove Dotlify from this system
 
 Global flags: `--profile <name>`, `--dir <path>`, `--dry-run`, `--no-color`, `--yes`, `--version`, `--help`.
 
+Full reference: `man dfy`.
+
 ## Installation
 
 ### Quick install

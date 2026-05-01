@@ -1,6 +1,6 @@
 SHELL_FILES := bin/dfy lib/*.sh install.sh tests/test_helper.bash completions/dfy.bash
 
-.PHONY: lint fmt fmt-check test check
+.PHONY: lint fmt fmt-check test check man
 
 lint:
 	shellcheck $(SHELL_FILES)
@@ -15,3 +15,6 @@ test:
 	bats --recursive tests/
 
 check: lint fmt-check test
+
+man:
+	man man/dfy.1

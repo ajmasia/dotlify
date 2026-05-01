@@ -1,0 +1,191 @@
+.\" SPDX-License-Identifier: GPL-3.0-or-later
+.TH DFY 1 "2026-05-01" "Dotlify 0.10.5" "Dotlify Manual"
+.
+.SH NAME
+dfy \- dotfiles manager built on GNU Stow
+.
+.SH SYNOPSIS
+.B dfy
+[\fIGLOBAL OPTIONS\fR]
+.I COMMAND
+[\fIOPTIONS\fR]
+[\fIARGS\fR]
+.
+.SH DESCRIPTION
+Dotlify (\fBdfy\fR) is a Bash framework on top of
+.BR stow (8)
+for managing dotfiles on Linux.
+.PP
+It organises dotfiles into packages — directories under a central
+dotfiles repository — and uses GNU Stow to create and remove symlinks
+in \fI$HOME\fR.
+Each package may carry a \fIREADME.md\fR describing its contents and
+dependencies.
+.PP
+The tool requires \fBbash\fR \(>= 4, \fBstow\fR \(>= 2.3.1, and
+\fBfiglet\fR.
+.
+.SH GLOBAL OPTIONS
+.TP
+.BR \-d ", " \-\-dir " \fIPATH\fR"
+Use \fIPATH\fR as the dotfiles repository instead of the configured or
+default location.
+.TP
+.BR \-p ", " \-\-profile " \fINAME\fR"
+Activate profile \fINAME\fR.
+A profile is a plain-text file listing one package per line.
+.TP
+.BR \-l ", " \-\-lang " \fILANG\fR"
+Override the UI language (\fBen\fR or \fBes\fR).
+.TP
+.BR \-y ", " \-\-yes
+Skip all confirmation prompts, assuming \*(lqyes\*(rq.
+.TP
+.B \-\-dry\-run
+Preview changes without writing anything to disk.
+.TP
+.B \-\-no\-color
+Disable coloured output.
+.TP
+.B \-\-version
+Print the Dotlify version and exit.
+.TP
+.B \-\-help
+Show usage summary and exit.
+.
+.SH COMMANDS
+.SS dfy init [\-\-dir \fIPATH\fR] [\-\-bare]
+Initialise a new dotfiles repository.
+Creates the directory, runs \fBgit init\fR, scaffolds starter packages
+(\fIbash-aliases\fR, \fIzsh-aliases\fR, \fIvim\fR), and writes the
+repository path to the config file.
+.PP
+Use \fB\-\-bare\fR to skip the scaffold and create only the git
+repository.
+.
+.SS dfy apply \fIPKG\fR...
+Link one or more packages into \fI$HOME\fR using \fBstow\fR.
+Aborts with exit code 3 when a target path already exists as a real
+file (run \fBdfy adopt\fR to absorb it first).
+.
+.SS dfy unlink \fIPKG\fR...
+Remove the symlinks created by \fBdfy apply\fR for the given packages.
+The package files in the repository are not affected.
+.
+.SS dfy adopt \fIPKG\fR
+Move an existing \fI$HOME\fR file into the \fIPKG\fR package directory
+and replace it with a symlink, effectively absorbing it into the
+dotfiles repository.
+.
+.SS dfy status
+Show the link status of all packages in the repository.
+Packages are shown as linked (\fB[+]\fR), unlinked (\fB[\-]\fR), or
+in conflict (\fB[!]\fR).
+.
+.SS dfy list
+List all available packages with their one-line description (taken from
+the package \fIREADME.md\fR).
+.
+.SS dfy info \fIPKG\fR
+Display the \fIREADME.md\fR of \fIPKG\fR.
+When \fI$EDITOR\fR is set the README is opened in the editor;
+otherwise it is printed with \fBcat\fR.
+.
+.SS dfy create \fIPKG\fR [\-s \fIPATH\fR]
+Scaffold a new package directory with a README template.
+The optional \fB\-s\fR/\fB\-\-subdir\fR flag pre-creates a
+subdirectory inside the package (e.g.\& \fB\-s .config/btop\fR
+creates \fIPKG/.config/btop/\fR).
+.
+.SS dfy doctor
+Check for broken symlinks pointing into the dotfiles repository and
+warn about a stow version that is too old.
+.
+.SS dfy update
+Pull the latest changes from the Dotlify clone and refresh shell
+completions.
+.
+.SS dfy uninstall
+Remove the \fBdfy\fR symlink, shell completions, man page, and
+optionally the clone directory and configuration.
+.
+.SS dfy config get \fIKEY\fR
+Print the value of a configuration key.
+.
+.SS dfy config set \fIKEY\fR \fIVALUE\fR
+Write a key-value pair to the configuration file.
+.
+.SH FILES
+.TP
+.I ~/.config/dotlify/config
+Key-value store for persistent configuration.
+Supported keys:
+.RS
+.TP
+.B dir
+Path to the dotfiles repository (default: \fI~/.dotfiles\fR).
+.TP
+.B lang
+UI language: \fBen\fR or \fBes\fR.
+.TP
+.B notifications
+Enable passive git-status checks: \fBtrue\fR (default) or \fBfalse\fR.
+.TP
+.B check_interval
+Seconds between git-status checks (default: \fB86400\fR, i.e.\& 24 h).
+.TP
+.B remind_interval
+Seconds before showing an idle reminder (default: \fB604800\fR, i.e.\& 7 days).
+.RE
+.TP
+.I ~/.config/dotlify/last_run
+Epoch timestamp of the last \fBdfy\fR invocation, used by the passive
+notification check.
+.TP
+.I ~/.local/bin/dfy
+Symlink to \fI<clone>/bin/dfy\fR, created by \fBinstall.sh\fR.
+.TP
+.I ~/.local/share/man/man1/dfy.1
+Installed man page.
+.
+.SH EXIT CODES
+.TS
+tab(|);
+l l.
+0|Success
+1|Generic error
+2|Usage error (bad arguments, unknown subcommand)
+3|Conflict (target file exists; run \fBdfy adopt\fR or remove it)
+4|Missing runtime dependency
+.TE
+.
+.SH ENVIRONMENT
+.TP
+.B DFY_DIR
+Override the dotfiles repository path.
+.TP
+.B DFY_PROFILE
+Active profile name.
+.TP
+.B DFY_LANG
+UI language (\fBen\fR or \fBes\fR).
+.TP
+.B DFY_DRY_RUN
+Set to \fB1\fR to preview changes without writing to disk.
+.TP
+.B DFY_YES
+Set to \fB1\fR to skip all confirmation prompts.
+.TP
+.B DFY_NO_COLOR
+Set to \fB1\fR to disable coloured output.
+.TP
+.B NO_COLOR
+Standard UNIX no-colour convention; honoured by \fBdfy\fR.
+.
+.SH SEE ALSO
+.BR stow (8),
+.BR git (1)
+.
+.SH LICENSE
+GPL-3.0-or-later.
+See \fIhttps://www.gnu.org/licenses/gpl-3.0.html\fR.
