@@ -46,20 +46,20 @@ _dfy_complete() {
   prev="${COMP_WORDS[COMP_CWORD - 1]}"
   subcmd=""
 
-  local -a subcommands=(apply unlink adopt list info create status doctor update uninstall help)
-  local -a global_flags=(--help -h --version -V --no-color --dry-run --profile --yes -y --dir --lang)
+  local -a subcommands=(apply unlink adopt list info create init status doctor update uninstall help)
+  local -a global_flags=(--help -h --version -V --no-color --dry-run --profile -p --yes -y --dir -d --lang -l)
 
   local i
   for ((i = 1; i < COMP_CWORD; i++)); do
     case "${COMP_WORDS[i]}" in
-      apply | unlink | adopt | list | info | create | status | doctor | update | uninstall | help)
+      apply | unlink | adopt | list | info | create | init | status | doctor | update | uninstall | help)
         subcmd="${COMP_WORDS[i]}"
         break
         ;;
     esac
   done
 
-  if [[ "$prev" == "--profile" ]]; then
+  if [[ "$prev" == "--profile" || "$prev" == "-p" ]]; then
     local dots_dir
     dots_dir="$(_dfy_resolve_dir)"
     local -a profiles
@@ -68,12 +68,12 @@ _dfy_complete() {
     return
   fi
 
-  if [[ "$prev" == "--dir" ]]; then
+  if [[ "$prev" == "--dir" || "$prev" == "-d" ]]; then
     mapfile -t COMPREPLY < <(compgen -d -- "$cur")
     return
   fi
 
-  if [[ "$prev" == "--lang" ]]; then
+  if [[ "$prev" == "--lang" || "$prev" == "-l" ]]; then
     mapfile -t COMPREPLY < <(compgen -W "en es" -- "$cur")
     return
   fi

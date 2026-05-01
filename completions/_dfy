@@ -53,6 +53,7 @@ _dfy() {
     'list:list available packages'
     'info:show a package README'
     'create:scaffold a new package'
+    'init:bootstrap a new dotfiles repository'
     'status:show link status of packages'
     'doctor:check runtime dependencies'
     'update:update Dotlify to the latest version'
@@ -67,9 +68,9 @@ _dfy() {
     '--no-color[disable color output]'
     '--dry-run[show what would be done without doing it]'
     '(--yes -y)'{--yes,-y}'[answer yes to all prompts]'
-    '--profile[activate a profile]:profile:->profile_names'
-    '--dir[dotfiles directory]:directory:_files -/'
-    '--lang[language]:lang:(en es)'
+    '(--profile -p)'{--profile,-p}'[activate a profile]:profile:->profile_names'
+    '(--dir -d)'{--dir,-d}'[dotfiles directory]:directory:_files -/'
+    '(--lang -l)'{--lang,-l}'[language]:lang:(en es)'
   )
 
   _arguments -C \
