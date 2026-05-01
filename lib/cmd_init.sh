@@ -171,15 +171,6 @@ cmd_init::run() {
         bare=1
         shift
         ;;
-      --dir)
-        shift
-        if [[ $# -eq 0 ]]; then
-          printf '%s\n' "${MSG_USAGE_HINT:-Run 'dfy --help' for usage.}" >&2
-          exit 2
-        fi
-        DFY_DIR="$1"
-        shift
-        ;;
       *)
         extra_args+=("$1")
         shift
