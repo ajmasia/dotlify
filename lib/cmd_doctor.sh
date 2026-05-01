@@ -78,7 +78,7 @@ cmd_doctor::run() {
     ui::ok "${MSG_DOCTOR_OK}"
   else
     # shellcheck disable=SC2059
-    ui::warn "$(printf "${MSG_DOCTOR_ISSUES:-%s issue(s) found.}" \
+    ui::info "$(printf "${MSG_DOCTOR_ISSUES:-%s issue(s) found.}" \
       "$(printf '%s%s%s' "$(theme::warning)" "$issues" "$(theme::reset)")")"
   fi
 }
