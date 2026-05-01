@@ -13,7 +13,9 @@ config::get() {
   [[ -f "$cf" ]] || return 0
   local line
   line="$(grep -m1 "^${key}=" "$cf" 2>/dev/null || true)"
-  [[ -n "$line" ]] && printf '%s' "${line#"${key}="}"
+  if [[ -n "$line" ]]; then
+    printf '%s' "${line#"${key}="}"
+  fi
 }
 
 # Set <key>=<value> in the config file, creating it if necessary.

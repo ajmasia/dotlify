@@ -54,6 +54,8 @@ source "${DFY_LIB}/cmd_create.sh"
 source "${DFY_LIB}/config.sh"
 # shellcheck source=/dev/null
 source "${DFY_LIB}/cmd_init.sh"
+# shellcheck source=/dev/null
+source "${DFY_LIB}/notify.sh"
 
 # Pre-load English so error messages during flag parsing have MSG_* values.
 i18n::load "en"
@@ -79,3 +81,4 @@ if [[ "${DFY_SHOW_HELP:-0}" == "1" || -z "${DFY_SUBCMD:-}" ]]; then
 fi
 
 args::dispatch "$DFY_SUBCMD" "${DFY_SUBCMD_ARGS[@]+"${DFY_SUBCMD_ARGS[@]}"}"
+notify::check

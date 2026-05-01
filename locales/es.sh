@@ -138,3 +138,7 @@ MSG_INIT_CONFIG_OVERWRITE="La configuración ya tiene dir=%s. ¿Sobreescribir? [
 
 # install.sh
 MSG_INSTALL_HINT_INIT="Ejecuta 'dfy init' para crear tu repositorio de dotfiles."
+
+# notify.sh
+MSG_NOTIFY_UNCOMMITTED="Tu repositorio de dotfiles tiene cambios sin commitear. Ejecuta: git -C %s status"
+MSG_NOTIFY_IDLE="Llevas %d días sin usar dfy. Ejecuta 'dfy help' para ver qué está disponible."
