@@ -6,6 +6,19 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.11.4] — 2026-05-01
+
+### Added
+- `docs/wiki/Examples.md`: new wiki page with a minimal dotfiles repo layout, example packages (`git`, `tmux`, XDG config with `alacritty`), example profiles, and a bootstrap workflow.
+
+### Changed
+- `docs/wiki/Home.md`: added link to the new Examples page.
+- `README.md`: removed the `examples/dotfiles/` directory reference; documentation links now point to the wiki for examples.
+
+### Removed
+- `examples/`: example dotfiles repo moved to the wiki.
+- `profiles/`: empty placeholder directory removed.
+
 ## [0.11.3] — 2026-05-01
 
 ### Changed
