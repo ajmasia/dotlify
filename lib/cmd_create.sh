@@ -8,13 +8,12 @@ _create_readme_template() {
     "$pkg" "$desc_line"
 }
 
-_create_ask_desc() {
-  local desc=""
+_create_read_desc() {
+  local _var="$1"
   if [[ "${DFY_YES:-0}" != "1" ]]; then
     ui::ask "${MSG_CREATE_ASK_DESC:-Description (optional, Enter to skip): }"
-    IFS= read -r desc
+    IFS= read -r "${_var?}"
   fi
-  printf '%s' "$desc"
 }
 
 cmd_create::run() {
@@ -37,16 +36,16 @@ cmd_create::run() {
       exit 1
     fi
     # Package exists but has no README — create just the README.
-    local desc
-    desc="$(_create_ask_desc)"
+    local desc=""
+    _create_read_desc desc
     _create_readme_template "$pkg" "$desc" >"$readme"
     # shellcheck disable=SC2059
     ui::ok "$(printf "${MSG_CREATE_README_DONE:-README created for %s}" "$pkg")"
     return 0
   fi
 
-  local desc
-  desc="$(_create_ask_desc)"
+  local desc=""
+  _create_read_desc desc
   mkdir -p "$pkg_dir"
   _create_readme_template "$pkg" "$desc" >"$readme"
   # shellcheck disable=SC2059
