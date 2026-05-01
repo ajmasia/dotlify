@@ -1,5 +1,11 @@
 # Dotlify
 
+[![CI](https://github.com/ajmasia/dotlify/actions/workflows/ci.yml/badge.svg)](https://github.com/ajmasia/dotlify/actions/workflows/ci.yml)
+[![License: GPL-3.0-or-later](https://img.shields.io/badge/license-GPL--3.0--or--later-blue)](LICENSE)
+[![Shell: bash ≥ 4](https://img.shields.io/badge/shell-bash%20%E2%89%A54-green)](https://www.gnu.org/software/bash/)
+[![Platform: Linux](https://img.shields.io/badge/platform-linux-orange)](https://kernel.org/)
+[![Version](https://img.shields.io/github/v/tag/ajmasia/dotlify?label=version)](https://github.com/ajmasia/dotlify/tags)
+
 A Bash framework on top of [GNU Stow](https://www.gnu.org/software/stow/) for managing dotfiles on Linux.
 
 ## Getting started
