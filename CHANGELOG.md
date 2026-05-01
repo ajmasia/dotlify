@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.12.2] — 2026-05-01
+
+### Added
+- `dfy doctor` now checks dotfiles repo git health: warns when the directory is not a git repository, has uncommitted changes, has no remote configured, or has unpushed commits.
+
 ## [0.12.1] — 2026-05-01
 
 ### Added
