@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.12.3] — 2026-05-01
+
+### Fixed
+- `dfy doctor`: issue count summary now uses `[i]` prefix instead of `[!]` to distinguish it from actual warnings.
+
 ## [0.12.2] — 2026-05-01
 
 ### Added
