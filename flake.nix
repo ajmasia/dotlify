@@ -22,6 +22,10 @@
           version = "0.11.7";
           src = ./.;
 
+          # Shell script package — nothing to compile or check in the sandbox.
+          dontBuild = true;
+          doCheck = false;
+
           nativeBuildInputs = [ pkgs.makeWrapper ];
 
           installPhase = ''
