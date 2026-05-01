@@ -16,6 +16,8 @@ cmd_list::run() {
 
   local pkg
   for pkg in "${pkgs[@]}"; do
-    printf '  - %s\n' "$pkg"
+    printf '  %s-%s %s%s%s\n' \
+      "$(theme::muted)" "$(theme::reset)" \
+      "$(theme::info)" "$pkg" "$(theme::reset)"
   done
 }

@@ -24,12 +24,12 @@ _ui_print() {
   fi
 }
 
-ui::info() { _ui_print 0 "$(theme::info)" "[info]" "$@"; }
-ui::warn() { _ui_print 1 "$(theme::warning)" "[warn]" "$@"; }
-ui::error() { _ui_print 1 "$(theme::error)" "[error]" "$@"; }
-ui::step() { _ui_print 0 "$(theme::accent)" "[step]" "$@"; }
-ui::ok() { _ui_print 0 "$(theme::success)" "[ok]" "$@"; }
-ui::off() { _ui_print 0 "$(theme::muted)" "[off]" "$@"; }
+ui::info() { _ui_print 0 "$(theme::info)" "[i]" "$@"; }
+ui::warn() { _ui_print 1 "$(theme::warning)" "[!]" "$@"; }
+ui::error() { _ui_print 1 "$(theme::error)" "[x]" "$@"; }
+ui::step() { _ui_print 0 "$(theme::accent)" "[>]" "$@"; }
+ui::ok() { _ui_print 0 "$(theme::success)" "[+]" "$@"; }
+ui::off() { _ui_print 0 "$(theme::muted)" "[-]" "$@"; }
 
 ui::banner() {
   local text="$1"

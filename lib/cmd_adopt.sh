@@ -5,8 +5,8 @@ cmd_adopt::run() {
   local -a pkgs=("$@")
 
   if [[ ${#pkgs[@]} -ne 1 ]]; then
-    printf '%s\n' "${MSG_HELP_ADOPT}" >&2
-    printf '%s\n' "${MSG_USAGE_HINT}" >&2
+    ui::error "${MSG_HELP_ADOPT}"
+    ui::info "${MSG_USAGE_HINT}"
     exit 2
   fi
 
@@ -17,7 +17,7 @@ cmd_adopt::run() {
 
   if [[ ! -d "$pkg_dir" ]]; then
     # shellcheck disable=SC2059
-    printf "${MSG_PKG_NOT_FOUND:-Package not found: %s}\n" "$pkg" >&2
+    ui::error "$(printf "${MSG_PKG_NOT_FOUND:-Package not found: %s}" "$pkg")"
     exit 1
   fi
 
@@ -41,11 +41,12 @@ cmd_adopt::run() {
   ui::info "${MSG_ADOPT_PREVIEW}"
   local f
   for f in "${to_adopt[@]}"; do
-    printf '  %s\n' "$f"
+    printf '  %s%s%s\n' "$(theme::accent)" "$f" "$(theme::reset)"
   done
+  printf '\n'
 
-  if [[ "${DOTS_YES:-0}" != "1" ]]; then
-    printf '%s' "${MSG_ADOPT_CONFIRM}"
+  if [[ "${DFY_YES:-0}" != "1" ]]; then
+    printf '%s%s%s' "$(theme::subtext)" "${MSG_ADOPT_CONFIRM}" "$(theme::reset)"
     local answer
     read -r answer
     if [[ "$answer" != [Yy]* ]]; then

@@ -6,11 +6,13 @@ cmd_status::run() {
   dots_dir="$(repo::resolve_dir)"
 
   # shellcheck disable=SC2059
-  ui::info "$(printf "${MSG_STATUS_DOTFILES:-Dotfiles: %s}" "$dots_dir")"
+  ui::info "$(printf "${MSG_STATUS_DOTFILES:-Dotfiles: %s}" \
+    "$(printf '%s%s%s' "$(theme::accent)" "$dots_dir" "$(theme::reset)")")"
 
-  if [[ -n "${DOTS_PROFILE:-}" ]]; then
+  if [[ -n "${DFY_PROFILE:-}" ]]; then
     # shellcheck disable=SC2059
-    ui::info "$(printf "${MSG_STATUS_PROFILE:-Active profile: %s}" "${DOTS_PROFILE}")"
+    ui::info "$(printf "${MSG_STATUS_PROFILE:-Active profile: %s}" \
+      "$(printf '%s%s%s' "$(theme::accent)" "${DFY_PROFILE}" "$(theme::reset)")")"
   else
     ui::info "${MSG_STATUS_NO_PROFILE:-(no active profile)}"
   fi
@@ -30,7 +32,9 @@ cmd_status::run() {
     marker="$(repo::package_status "$dots_dir" "$pkg")"
     case "$marker" in
       ✓) ui::ok "$pkg" ;;
-      !) ui::warn "$pkg — ${MSG_STATUS_CONFLICT_HINT:-target exists, run: opendots adopt ${pkg}}" ;;
+      !) ui::warn "$(printf '%s%s%s — %s' \
+        "$(theme::warning)" "$pkg" "$(theme::reset)" \
+        "${MSG_STATUS_CONFLICT_HINT:-target exists, run: dfy adopt}")" ;;
       *) ui::off "$pkg" ;;
     esac
   done

@@ -5,13 +5,13 @@ cmd_install::run() {
   local -a pkgs=("$@")
 
   if [[ ${#pkgs[@]} -eq 0 ]]; then
-    if [[ -n "${DOTS_PROFILE:-}" ]]; then
+    if [[ -n "${DFY_PROFILE:-}" ]]; then
       local _profile_pkgs
-      _profile_pkgs="$(profile::load "${DOTS_PROFILE}")"
+      _profile_pkgs="$(profile::load "${DFY_PROFILE}")"
       mapfile -t pkgs <<<"$_profile_pkgs"
     else
-      printf '%s\n' "${MSG_HELP_INSTALL}" >&2
-      printf '%s\n' "${MSG_USAGE_HINT}" >&2
+      ui::error "${MSG_HELP_INSTALL}"
+      ui::info "${MSG_USAGE_HINT}"
       exit 2
     fi
   fi
@@ -24,7 +24,7 @@ cmd_install::run() {
     local pkg_dir="${dots_dir}/${pkg}"
     if [[ ! -d "$pkg_dir" ]]; then
       # shellcheck disable=SC2059
-      printf "${MSG_PKG_NOT_FOUND:-Package not found: %s}\n" "$pkg" >&2
+      ui::error "$(printf "${MSG_PKG_NOT_FOUND:-Package not found: %s}" "$pkg")"
       exit 1
     fi
 
@@ -32,12 +32,12 @@ cmd_install::run() {
     _install_check_conflicts "$pkg_dir" conflicts
 
     if [[ ${#conflicts[@]} -gt 0 ]]; then
-      printf '%s\n' "${MSG_INSTALL_CONFLICT}" >&2
+      ui::error "${MSG_INSTALL_CONFLICT}"
       local f
       for f in "${conflicts[@]}"; do
-        printf '  %s\n' "$f" >&2
+        printf '  %s%s%s\n' "$(theme::warning)" "$f" "$(theme::reset)"
       done
-      printf '%s\n' "${MSG_INSTALL_ADOPT_HINT}" >&2
+      ui::warn "${MSG_INSTALL_ADOPT_HINT}"
       exit 3
     fi
 
@@ -63,7 +63,7 @@ _install_check_conflicts() {
 _install_stow() {
   local pkg="$1" dots_dir="$2"
   local -a stow_args=(-d "$dots_dir" -t "$HOME")
-  if [[ "${DOTS_DRY_RUN:-0}" == "1" ]]; then
+  if [[ "${DFY_DRY_RUN:-0}" == "1" ]]; then
     stow_args+=(-n -v)
     # In dry-run, stow writes planned operations to stderr — show them as info.
     stow "${stow_args[@]}" "$pkg" 2> >(while IFS= read -r line; do ui::info "$line"; done)

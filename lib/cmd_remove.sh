@@ -18,13 +18,13 @@ cmd_remove::run() {
   local -a pkgs=("$@")
 
   if [[ ${#pkgs[@]} -eq 0 ]]; then
-    if [[ -n "${DOTS_PROFILE:-}" ]]; then
+    if [[ -n "${DFY_PROFILE:-}" ]]; then
       local _profile_pkgs
-      _profile_pkgs="$(profile::load "${DOTS_PROFILE}")"
+      _profile_pkgs="$(profile::load "${DFY_PROFILE}")"
       mapfile -t pkgs <<<"$_profile_pkgs"
     else
-      printf '%s\n' "${MSG_HELP_REMOVE}" >&2
-      printf '%s\n' "${MSG_USAGE_HINT}" >&2
+      ui::error "${MSG_HELP_REMOVE}"
+      ui::info "${MSG_USAGE_HINT}"
       exit 2
     fi
   fi
@@ -40,7 +40,7 @@ cmd_remove::run() {
       continue
     fi
     local -a stow_args=(-d "$dots_dir" -t "$HOME" -D)
-    if [[ "${DOTS_DRY_RUN:-0}" == "1" ]]; then
+    if [[ "${DFY_DRY_RUN:-0}" == "1" ]]; then
       stow_args+=(-n -v)
     fi
     stow_args+=("$pkg")
