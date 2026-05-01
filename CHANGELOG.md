@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.11.11] — 2026-05-01
+
+### Changed
+- `README.md`: add Nix flake badge.
+
 ## [0.11.10] — 2026-05-01
 
 ### Changed
