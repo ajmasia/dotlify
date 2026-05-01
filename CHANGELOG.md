@@ -6,6 +6,21 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.9.0] — 2026-05-01
+
+### Added
+- `dfy info <pkg>`: prints the full README of a package; shows `[i] No README found` when absent.
+- `dfy create <pkg>`: scaffolds a new package directory with a README template (Dependencies, Setup, Notes sections). If the package already exists but has no README, creates only the README. Prompts for a description; `--yes` skips the prompt.
+- `repo::pkg_description`: extracts a one-line synopsis from `<pkg>/README.md` — first prose line after the heading, falling back to the heading text, or `(no description)` for an empty README.
+- `MSG_STATUS_NOT_LINKED` locale key for the new status section.
+
+### Changed
+- `dfy install` renamed to `dfy apply` — clearer semantics (applies stow links, does not install software).
+- `dfy remove` renamed to `dfy unlink` — pairs naturally with `apply`; output now includes a hint that package files remain in the repository.
+- `dfy list`: redesigned output — `[i] <pkg> (<description>)` for packages with a README, `[!] <pkg> (no readme)` for those without.
+- `dfy status`: packages grouped into sections (Linked / Conflicts / Not linked) each preceded by a `[>]` header.
+- CI: workflow now triggers only on version tags (`v*.*.*`), not on every branch push.
+
 ## [0.8.4] — 2026-05-01
 
 ### Changed
