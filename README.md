@@ -79,6 +79,23 @@ curl -fsSL https://raw.githubusercontent.com/ajmasia/dotlify/main/install.sh | b
 
 The script clones Dotlify to `~/.local/share/dotlify`, symlinks `dfy` into `~/.local/bin`, and installs shell completions.
 
+### Nix
+
+```bash
+nix profile install github:ajmasia/dotlify
+```
+
+Or add it to your `flake.nix`:
+
+```nix
+inputs.dotlify.url = "github:ajmasia/dotlify";
+```
+
+`bash`, `stow`, and `figlet` are provided automatically by the derivation.
+To upgrade: `nix profile upgrade dotlify`. To remove: `nix profile remove dotlify`.
+
+> **Man page on macOS / non-NixOS**: add `~/.nix-profile/share/man` to `MANPATH`.
+
 ### Manual install
 
 ```bash

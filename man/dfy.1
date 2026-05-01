@@ -1,5 +1,5 @@
 .\" SPDX-License-Identifier: GPL-3.0-or-later
-.TH DFY 1 "2026-05-01" "Dotlify 0.11.7" "Dotlify Manual"
+.TH DFY 1 "2026-05-01" "Dotlify 0.11.8" "Dotlify Manual"
 .
 .SH NAME
 dfy \- dotfiles manager built on GNU Stow
@@ -106,10 +106,18 @@ warn about a stow version that is too old.
 .SS dfy update
 Pull the latest changes from the Dotlify clone and refresh shell
 completions.
+.PP
+When Dotlify was installed via Nix, this command prints the equivalent
+Nix command instead:
+.B nix profile upgrade dotlify
 .
 .SS dfy uninstall
 Remove the \fBdfy\fR symlink, shell completions, man page, and
 optionally the clone directory and configuration.
+.PP
+When Dotlify was installed via Nix, this command prints the equivalent
+Nix command instead:
+.B nix profile remove dotlify
 .
 .SS dfy config get \fIKEY\fR
 Print the current value of a configuration key.
@@ -195,6 +203,26 @@ Set to \fB1\fR to disable coloured output.
 .TP
 .B NO_COLOR
 Standard UNIX no-colour convention; honoured by \fBdfy\fR.
+.
+.SH NIX INSTALLATION
+When installed via the Dotlify Nix flake
+.RI ( "nix profile install github:ajmasia/dotlify" ),
+\fBbash\fR, \fBstow\fR, and \fBfiglet\fR are provided by the Nix store
+and do not need to be installed separately.
+.PP
+The \fBdfy update\fR and \fBdfy uninstall\fR commands are not
+applicable in a Nix-managed installation; they print the correct Nix
+command to use instead.
+.PP
+The man page is installed to
+\fI~/.nix-profile/share/man/man1/dfy.1\fR.
+To make it accessible, ensure \fIMANPATH\fR includes that directory:
+.PP
+.RS
+.nf
+export MANPATH="$HOME/.nix-profile/share/man:$MANPATH"
+.fi
+.RE
 .
 .SH SEE ALSO
 .BR stow (8),

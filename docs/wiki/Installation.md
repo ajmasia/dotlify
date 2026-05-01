@@ -18,6 +18,56 @@ brew install bash stow figlet
 
 Ensure `/opt/homebrew/bin` (Apple Silicon) or `/usr/local/bin` (Intel) is in your `PATH` so the Homebrew bash is picked up.
 
+## Nix
+
+If you use Nix, Dotlify provides a flake. All runtime dependencies
+(`bash` ≥ 4, `stow`, `figlet`) are bundled — nothing else to install.
+
+### Install
+
+```bash
+nix profile install github:ajmasia/dotlify
+```
+
+### Upgrade
+
+```bash
+nix profile upgrade dotlify
+```
+
+### Remove
+
+```bash
+nix profile remove dotlify
+```
+
+### Home Manager
+
+```nix
+# flake.nix inputs
+inputs.dotlify.url = "github:ajmasia/dotlify";
+
+# home.nix
+home.packages = [ inputs.dotlify.packages.${pkgs.system}.default ];
+```
+
+### nix run (no install)
+
+```bash
+nix run github:ajmasia/dotlify -- init
+```
+
+### Man page
+
+The man page lands at `~/.nix-profile/share/man/man1/dfy.1`.
+On non-NixOS systems, add it to `MANPATH`:
+
+```bash
+export MANPATH="$HOME/.nix-profile/share/man:$MANPATH"
+```
+
+---
+
 ## Quick install
 
 ```bash
