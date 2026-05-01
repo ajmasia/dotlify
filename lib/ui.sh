@@ -30,6 +30,7 @@ ui::error() { _ui_print 1 "$(theme::error)" "[x]" "$@"; }
 ui::step() { _ui_print 0 "$(theme::accent)" "[>]" "$@"; }
 ui::ok() { _ui_print 0 "$(theme::success)" "[+]" "$@"; }
 ui::off() { _ui_print 0 "$(theme::muted)" "[-]" "$@"; }
+ui::ask() { printf '%s[?]%s %s%s%s ' "$(theme::warning)" "$(theme::reset)" "$(theme::text)" "$*" "$(theme::reset)"; }
 
 ui::banner() {
   local text="$1"

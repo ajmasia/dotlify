@@ -6,6 +6,16 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.8.3] — 2026-05-01
+
+### Fixed
+- `install.sh`: fix escape sequences printed as literal text when piped from curl (use `$'\033[...]'` quoting).
+
+### Changed
+- `uninstall`: confirmation prompts now use `[?]` prefix via new `ui::ask` helper; blank line added before each prompt.
+- `adopt`: confirmation prompt uses `ui::ask` for consistent `[?]` prefix.
+- `install.sh`: dependency install prompt uses `_ui_ask` for consistent `[?]` prefix.
+
 ## [0.8.2] — 2026-05-01
 
 ### Changed

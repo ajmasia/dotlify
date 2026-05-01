@@ -46,7 +46,7 @@ cmd_adopt::run() {
   printf '\n'
 
   if [[ "${DFY_YES:-0}" != "1" ]]; then
-    printf '%s%s%s' "$(theme::subtext)" "${MSG_ADOPT_CONFIRM}" "$(theme::reset)"
+    ui::ask "${MSG_ADOPT_CONFIRM}"
     local answer
     read -r answer
     if [[ "$answer" != [Yy]* ]]; then

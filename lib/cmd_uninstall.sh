@@ -18,8 +18,9 @@ cmd_uninstall::run() {
   if [[ -d "$config_dir" ]]; then
     answer="y"
     if [[ "${DFY_YES:-0}" != "1" ]]; then
+      printf '\n'
       # shellcheck disable=SC2059
-      printf '%s' "$(printf "${MSG_UNINSTALL_CONFIG:-Remove config directory %s? [y/N] }" \
+      ui::ask "$(printf "${MSG_UNINSTALL_CONFIG:-Remove config directory %s? [y/N]}" \
         "$(printf '%s%s%s' "$(theme::accent)" "$config_dir" "$(theme::reset)")")"
       read -r answer
     fi
@@ -36,8 +37,9 @@ cmd_uninstall::run() {
   if [[ -d "$clone_dir" ]]; then
     answer="y"
     if [[ "${DFY_YES:-0}" != "1" ]]; then
+      printf '\n'
       # shellcheck disable=SC2059
-      printf '%s' "$(printf "${MSG_UNINSTALL_CLONE:-Remove clone directory %s? [y/N] }" \
+      ui::ask "$(printf "${MSG_UNINSTALL_CLONE:-Remove clone directory %s? [y/N]}" \
         "$(printf '%s%s%s' "$(theme::accent)" "$clone_dir" "$(theme::reset)")")"
       read -r answer
     fi
@@ -47,6 +49,5 @@ cmd_uninstall::run() {
     fi
   fi
 
-  printf '\n'
   ui::ok "${MSG_UNINSTALL_OK:-Dotlify uninstalled.}"
 }

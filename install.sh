@@ -14,14 +14,14 @@ _OS_RELEASE="${_OS_RELEASE:-/etc/os-release}"
 
 _install_colors() {
   if [[ -t 1 && -z "${NO_COLOR:-}" ]]; then
-    _C_ACCENT='\033[38;2;203;166;247m'
-    _C_INFO='\033[38;2;137;220;235m'
-    _C_OK='\033[38;2;166;227;161m'
-    _C_WARN='\033[38;2;249;226;175m'
-    _C_ERROR='\033[38;2;243;139;168m'
-    _C_TEXT='\033[38;2;205;214;244m'
-    _C_MUTED='\033[38;2;108;112;134m'
-    _C_RESET='\033[0m'
+    _C_ACCENT=$'\033[38;2;203;166;247m'
+    _C_INFO=$'\033[38;2;137;220;235m'
+    _C_OK=$'\033[38;2;166;227;161m'
+    _C_WARN=$'\033[38;2;249;226;175m'
+    _C_ERROR=$'\033[38;2;243;139;168m'
+    _C_TEXT=$'\033[38;2;205;214;244m'
+    _C_MUTED=$'\033[38;2;108;112;134m'
+    _C_RESET=$'\033[0m'
   else
     _C_ACCENT='' _C_INFO='' _C_OK='' _C_WARN='' _C_ERROR=''
     _C_TEXT='' _C_MUTED='' _C_RESET=''
@@ -35,6 +35,7 @@ _ui_ok() { printf "${_C_OK}[+]${_C_RESET} ${_C_TEXT}%s${_C_RESET}\n" "$*"; }
 _ui_info() { printf "${_C_INFO}[i]${_C_RESET} ${_C_TEXT}%s${_C_RESET}\n" "$*"; }
 _ui_warn() { printf "${_C_WARN}[!]${_C_RESET} ${_C_TEXT}%s${_C_RESET}\n" "$*" >&2; }
 _ui_error() { printf "${_C_ERROR}[x]${_C_RESET} ${_C_TEXT}%s${_C_RESET}\n" "$*" >&2; }
+_ui_ask() { printf "${_C_WARN}[?]${_C_RESET} ${_C_TEXT}%s${_C_RESET} " "$*"; }
 _ui_section() { printf "\n${_C_ACCENT}%s${_C_RESET}\n" "$*"; }
 _ui_value() { printf '%s%s%s' "${_C_INFO}" "$*" "${_C_RESET}"; }
 _ui_muted() { printf '%s%s%s' "${_C_MUTED}" "$*" "${_C_RESET}"; }
@@ -159,7 +160,7 @@ install::deps() {
   _ui_info "Will run: $(_ui_value "$cmd")"
 
   if [[ "$yes" != "1" ]]; then
-    printf '%s' "$(_ui_muted "Proceed? [y/N] ")"
+    _ui_ask "Proceed? [y/N]"
     local answer
     read -r answer
     if [[ "$answer" != "y" && "$answer" != "Y" ]]; then
