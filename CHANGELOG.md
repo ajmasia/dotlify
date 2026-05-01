@@ -6,6 +6,12 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.10.1] — 2026-05-01
+
+### Added
+- `dfy init`: generates a `README.md` at the root of the new dotfiles repo with basic usage instructions. Two variants: scaffold mode includes the example packages table and apply commands; `--bare` mode shows a minimal getting-started guide.
+- `dfy init` scaffold: each example package (`bash-aliases`, `zsh-aliases`, `vim`) now includes its own `README.md` generated from the standard package template.
+
 ## [0.10.0] — 2026-05-01
 
 ### Added
