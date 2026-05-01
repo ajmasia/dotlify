@@ -62,3 +62,44 @@ teardown() {
   [ "$status" -eq 0 ]
   [[ -f "${DFY_DIR}/newpkg/README.md" ]]
 }
+
+@test "create adds .stow-local-ignore that excludes README.md" {
+  run "$DOTS_BIN" --yes create mypkg
+  [ "$status" -eq 0 ]
+  [[ -f "${DFY_DIR}/mypkg/.stow-local-ignore" ]]
+  grep -q 'README' "${DFY_DIR}/mypkg/.stow-local-ignore"
+}
+
+@test "create updates repo README Packages table with linked entry" {
+  cat >"${DFY_DIR}/README.md" <<'HEREDOC'
+# My Dotfiles
+
+## Packages
+
+| Package | File | Description |
+|---------|------|-------------|
+HEREDOC
+  run "$DOTS_BIN" --yes create mypkg
+  [ "$status" -eq 0 ]
+  grep -q '\[`mypkg`\]' "${DFY_DIR}/README.md"
+  grep -q 'mypkg/README.md' "${DFY_DIR}/README.md"
+}
+
+@test "create does not duplicate entry in repo README" {
+  cat >"${DFY_DIR}/README.md" <<'HEREDOC'
+# My Dotfiles
+
+## Packages
+
+| Package | File | Description |
+|---------|------|-------------|
+| [`mypkg`](mypkg/README.md) | — | existing |
+HEREDOC
+  mkdir -p "${DFY_DIR}/mypkg"
+  run "$DOTS_BIN" --yes create mypkg
+  # Package already has no README, so it creates README and re-runs update
+  # The update should be idempotent (only one entry)
+  local count
+  count="$(grep -c 'mypkg/README.md' "${DFY_DIR}/README.md")"
+  [ "$count" -eq 1 ]
+}
