@@ -6,6 +6,12 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.11.2] — 2026-05-01
+
+### Added
+- `config::write_defaults`: writes all known config keys with their default values for keys not already set. Called by `dfy init` so the config file is fully populated after first run.
+- `dir` default uses the resolved `$HOME` path — no literal `~` ever appears in the config file.
+
 ## [0.11.1] — 2026-05-01
 
 ### Added
