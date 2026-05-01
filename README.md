@@ -129,29 +129,10 @@ make test       # bats tests/
 make check      # lint + fmt-check + test
 ```
 
-## Example dotfiles repo
-
-The [`examples/dotfiles/`](examples/dotfiles/) directory shows a minimal dotfiles repo layout with two packages (`git`, `tmux`) and a `home` profile. Use it as a reference or copy it as a starting point:
-
-```
-examples/dotfiles/
-├── git/
-│   └── .gitconfig
-├── tmux/
-│   └── .tmux.conf
-└── profiles/
-    └── home.txt      # lists: git, tmux
-```
-
-```bash
-dfy --dir examples/dotfiles list
-dfy --dir examples/dotfiles --profile home apply
-```
-
 ## Documentation
 
 - `man dfy` — full man page (installed with `install.sh`)
-- [Wiki](https://github.com/ajmasia/dotlify/wiki) — installation, commands, configuration, profiles
+- [Wiki](https://github.com/ajmasia/dotlify/wiki) — installation, commands, configuration, profiles, examples
 - `dfy --help` / `dfy <subcommand> --help` — inline help
 
 ## License

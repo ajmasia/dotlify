@@ -8,6 +8,7 @@ Dotlify (`dfy`) is a Bash framework on top of [GNU Stow](https://www.gnu.org/sof
 - [Commands](Commands) — full subcommand reference
 - [Configuration](Configuration) — config file and environment variables
 - [Profiles](Profiles) — managing multiple dotfile sets
+- [Examples](Examples) — example dotfiles repository layout and packages
 
 ## Quick start
 
