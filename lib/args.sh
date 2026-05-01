@@ -18,7 +18,10 @@ DFY_SUBCMD_ARGS=()
 _ARGS_KNOWN_SUBCMDS=(apply unlink adopt list status doctor update uninstall info create init help)
 
 # Parse global flags from "$@".
-# Sets the DFY_* globals above; stops at the first non-flag argument (subcommand).
+# Global flags are accepted in any position — before or after the subcommand.
+# Unknown flags before the subcommand cause an error.
+# Unknown flags after the subcommand are forwarded to the subcommand via
+# DFY_SUBCMD_ARGS so subcommand-specific flags (e.g. --bare) still work.
 args::parse_global() {
   DFY_SHOW_HELP=0
   DFY_SHOW_VERSION=0
@@ -48,39 +51,46 @@ args::parse_global() {
         DFY_YES=1
         shift
         ;;
-      --profile)
+      --profile | -p)
         shift
         if [[ $# -eq 0 ]]; then
-          _args_flag_needs_value "--profile"
+          _args_flag_needs_value "--profile / -p"
         fi
         DFY_PROFILE="$1"
         shift
         ;;
-      --dir)
+      --dir | -d)
         shift
         if [[ $# -eq 0 ]]; then
-          _args_flag_needs_value "--dir"
+          _args_flag_needs_value "--dir / -d"
         fi
         DFY_DIR="$1"
         shift
         ;;
-      --lang)
+      --lang | -l)
         shift
         if [[ $# -eq 0 ]]; then
-          _args_flag_needs_value "--lang"
+          _args_flag_needs_value "--lang / -l"
         fi
         DFY_LANG="$1"
         shift
         ;;
       --* | -*)
-        _args_unknown_flag "$1"
+        if [[ -n "$DFY_SUBCMD" ]]; then
+          # Forward unknown flags to the subcommand (e.g. --bare for init).
+          DFY_SUBCMD_ARGS+=("$1")
+        else
+          _args_unknown_flag "$1"
+        fi
+        shift
         ;;
       *)
-        DFY_SUBCMD="$1"
+        if [[ -z "$DFY_SUBCMD" ]]; then
+          DFY_SUBCMD="$1"
+        else
+          DFY_SUBCMD_ARGS+=("$1")
+        fi
         shift
-        # shellcheck disable=SC2034
-        DFY_SUBCMD_ARGS=("$@")
-        return 0
         ;;
     esac
   done
