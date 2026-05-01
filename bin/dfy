@@ -50,6 +50,10 @@ source "${DFY_LIB}/cmd_uninstall.sh"
 source "${DFY_LIB}/cmd_info.sh"
 # shellcheck source=/dev/null
 source "${DFY_LIB}/cmd_create.sh"
+# shellcheck source=/dev/null
+source "${DFY_LIB}/config.sh"
+# shellcheck source=/dev/null
+source "${DFY_LIB}/cmd_init.sh"
 
 # Pre-load English so error messages during flag parsing have MSG_* values.
 i18n::load "en"

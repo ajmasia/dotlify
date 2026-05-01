@@ -15,7 +15,7 @@ export DFY_SUBCMD=""
 # shellcheck disable=SC2034  # read by bin/dfy after args::parse_global returns
 DFY_SUBCMD_ARGS=()
 
-_ARGS_KNOWN_SUBCMDS=(apply unlink adopt list status doctor update uninstall info create help)
+_ARGS_KNOWN_SUBCMDS=(apply unlink adopt list status doctor update uninstall info create init help)
 
 # Parse global flags from "$@".
 # Sets the DFY_* globals above; stops at the first non-flag argument (subcommand).
@@ -137,6 +137,7 @@ args::dispatch() {
     uninstall) cmd_uninstall::run ;;
     info) cmd_info::run "${subcmd_args[@]+"${subcmd_args[@]}"}" ;;
     create) cmd_create::run "${subcmd_args[@]+"${subcmd_args[@]}"}" ;;
+    init) cmd_init::run "${subcmd_args[@]+"${subcmd_args[@]}"}" ;;
     help)
       if [[ ${#subcmd_args[@]} -gt 0 ]]; then
         cmd_help::run_subcmd "${subcmd_args[0]}"
