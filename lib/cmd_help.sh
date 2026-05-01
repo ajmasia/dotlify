@@ -25,7 +25,9 @@ _help_opt_row() {
 cmd_help::run() {
   ui::banner "Dotlify"
   printf '\n'
-  printf '%s%s%s\n' "$(theme::accent)" "${MSG_HELP_USAGE}" "$(theme::reset)"
+  printf '%s%s%s %s%s%s\n' \
+    "$(theme::accent)" "${MSG_HELP_USAGE_LABEL}" "$(theme::reset)" \
+    "$(theme::subtext)" "${MSG_HELP_USAGE_BODY}" "$(theme::reset)"
   printf '\n'
   _help_section "${MSG_HELP_SUBCMDS_HEADER}"
   _help_cmd_row "apply" "${MSG_SUBCMD_APPLY}"

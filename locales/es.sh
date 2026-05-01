@@ -9,7 +9,8 @@ MSG_USAGE_HINT="Ejecuta 'dfy --help' para ver la ayuda."
 MSG_NOT_IMPLEMENTED="%s: aún no implementado."
 
 # Ayuda — etiquetas estructurales
-MSG_HELP_USAGE="Uso: dfy [opciones] <subcomando> [args]"
+MSG_HELP_USAGE_LABEL="Uso:"
+MSG_HELP_USAGE_BODY="dfy [opciones] <subcomando> [args]"
 MSG_HELP_SUBCMDS_HEADER="Subcomandos:"
 MSG_HELP_OPTS_HEADER="Opciones globales:"
 

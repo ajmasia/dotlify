@@ -9,7 +9,8 @@ MSG_USAGE_HINT="Run 'dfy --help' for usage."
 MSG_NOT_IMPLEMENTED="%s: not implemented yet."
 
 # Help — structural labels
-MSG_HELP_USAGE="Usage: dfy [options] <subcommand> [args]"
+MSG_HELP_USAGE_LABEL="Usage:"
+MSG_HELP_USAGE_BODY="dfy [options] <subcommand> [args]"
 MSG_HELP_SUBCMDS_HEADER="Subcommands:"
 MSG_HELP_OPTS_HEADER="Global options:"
 
