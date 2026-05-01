@@ -76,6 +76,12 @@ teardown() {
   [[ ! -f "${INIT_DIR}/bash-aliases/README.md" ]]
 }
 
+@test "--dir after init subcommand is accepted" {
+  run "$DOTS_BIN" init --dir "$INIT_DIR" --bare
+  [ "$status" -eq 0 ]
+  [[ -d "${INIT_DIR}/.git" ]]
+}
+
 @test "config contains dir=<path> after successful run" {
   run "$DOTS_BIN" --dir "$INIT_DIR" init --bare
   [ "$status" -eq 0 ]

@@ -13,9 +13,12 @@ setup() {
 }
 
 @test "dots --version exits 0 and stdout contains version" {
+  local version_file="${BATS_TEST_DIRNAME}/../../lib/version.sh"
+  local expected_version
+  expected_version="$(grep -m1 'DOTLIFY_VERSION=' "$version_file" | cut -d'"' -f2)"
   run "$DOTS_BIN" --version
   [ "$status" -eq 0 ]
-  [[ "$output" == *"0.10.0"* ]]
+  [[ "$output" == *"$expected_version"* ]]
 }
 
 @test "bare dots exits 0 and shows banner" {
