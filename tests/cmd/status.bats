@@ -60,3 +60,14 @@ teardown() {
   [ "$status" -eq 0 ]
   [[ "$output" == *"[>]"*"Not linked"* ]]
 }
+
+@test "status shows [+] for linked package that also has README.md" {
+  make_package vim .vimrc
+  # Add README.md and .stow-local-ignore — stow should not link README.md
+  printf '# vim\n' >"${DFY_DIR}/vim/README.md"
+  printf '%s\n' '^README\.md$' >"${DFY_DIR}/vim/.stow-local-ignore"
+  stow -d "$DFY_DIR" -t "$HOME" vim
+  run "$DOTS_BIN" status
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"[+]"*"vim"* ]]
+}

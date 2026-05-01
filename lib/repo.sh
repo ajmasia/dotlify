@@ -110,7 +110,9 @@ repo::package_status() {
     else
       not_linked=$((not_linked + 1))
     fi
-  done < <(find "$pkg_dir" -mindepth 1 -type f -print0 2>/dev/null)
+  done < <(find "$pkg_dir" -mindepth 1 -type f \
+    ! -name 'README.md' ! -name '.stow-local-ignore' \
+    -print0 2>/dev/null)
 
   if ((conflict > 0)); then
     printf '!'
@@ -119,4 +121,32 @@ repo::package_status() {
   else
     printf '·'
   fi
+}
+
+# Insert a linked package row into the repo README Packages table.
+# Silently skips when: README absent, no Packages table, or pkg already listed.
+repo::update_readme_table() {
+  local dots_dir="$1" pkg="$2" desc="$3"
+  local readme="${dots_dir}/README.md"
+  [[ -f "$readme" ]] || return 0
+  grep -q '| Package ' "$readme" 2>/dev/null || return 0
+  grep -qF "[\`${pkg}\`]" "$readme" 2>/dev/null && return 0
+
+  local cell="${desc:-—}"
+  local new_row="| [\`${pkg}\`](${pkg}/README.md) | — | ${cell} |"
+  local tmp
+  tmp="$(mktemp)"
+  # shellcheck disable=SC2016
+  awk -v row="$new_row" '
+    BEGIN { in_pkg = 0; last_tbl = 0 }
+    /^## / { in_pkg = ($0 ~ /^## Packages/) }
+    in_pkg && /^\|/ { last_tbl = NR }
+    { lines[NR] = $0 }
+    END {
+      for (i = 1; i <= NR; i++) {
+        print lines[i]
+        if (i == last_tbl) print row
+      }
+    }
+  ' "$readme" >"$tmp" && mv "$tmp" "$readme"
 }
