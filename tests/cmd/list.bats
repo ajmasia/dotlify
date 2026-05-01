@@ -14,52 +14,33 @@ teardown() {
   teardown_dirs
 }
 
-@test "list shows package names with - prefix" {
-  make_package vim .vimrc
-  make_package git .gitconfig
+@test "list shows [i] and description for package with README" {
+  make_package nvim .config/nvim/init.vim
+  printf '# nvim\n\nNeovim configuration\n' >"${DFY_DIR}/nvim/README.md"
   run "$DOTS_BIN" list
   [ "$status" -eq 0 ]
-  [[ "$output" == *"- vim"* ]]
-  [[ "$output" == *"- git"* ]]
+  [[ "$output" == *"[i]"*"nvim"*"Neovim configuration"* ]]
 }
 
-@test "list does not show link status indicators" {
+@test "list shows [!] and (no readme) for package without README" {
+  make_package zsh .zshrc
+  run "$DOTS_BIN" list
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"[!]"*"zsh"*"no readme"* ]]
+}
+
+@test "list shows no link status indicators" {
   make_package vim .vimrc
   stow -d "$DFY_DIR" -t "$HOME" vim
   run "$DOTS_BIN" list
   [ "$status" -eq 0 ]
   [[ "$output" != *"[+]"* ]]
-  [[ "$output" != *"[!]"* ]]
 }
 
-@test "list shows description when README has prose" {
-  make_package nvim .config/nvim/init.vim
-  printf '# nvim\n\nNeovim configuration\n' >"${DFY_DIR}/nvim/README.md"
-  run "$DOTS_BIN" list
-  [ "$status" -eq 0 ]
-  [[ "$output" == *"nvim"* ]]
-  [[ "$output" == *"Neovim configuration"* ]]
-}
-
-@test "list shows no description column for package without README" {
-  make_package zsh .zshrc
-  run "$DOTS_BIN" list
-  [ "$status" -eq 0 ]
-  [[ "$output" == *"- zsh"* ]]
-  [[ "$output" != *"(no description)"* ]]
-}
-
-@test "list aligns descriptions to a consistent column" {
-  make_package nvim .config/nvim/init.vim
+@test "list shows description in parentheses" {
   make_package tmux .tmux.conf
-  printf '# nvim\n\nNeovim configuration\n' >"${DFY_DIR}/nvim/README.md"
   printf '# tmux\n\nTerminal multiplexer\n' >"${DFY_DIR}/tmux/README.md"
   run "$DOTS_BIN" list
   [ "$status" -eq 0 ]
-  local nvim_line tmux_line nvim_col tmux_col
-  nvim_line="$(printf '%s\n' "$output" | grep 'nvim')"
-  tmux_line="$(printf '%s\n' "$output" | grep 'tmux')"
-  nvim_col="${nvim_line%%Neovim*}"
-  tmux_col="${tmux_line%%Terminal*}"
-  [[ "${#nvim_col}" -eq "${#tmux_col}" ]]
+  [[ "$output" == *"(Terminal multiplexer)"* ]]
 }

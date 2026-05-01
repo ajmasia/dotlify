@@ -66,6 +66,7 @@ MSG_ADOPT_OK="Adopted: %s"
 
 # cmd_list.sh
 MSG_LIST_EMPTY="No packages found in %s"
+MSG_LIST_NO_README="no readme"
 
 # cmd_info.sh
 MSG_INFO_NO_README="No README found for %s"

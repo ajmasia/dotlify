@@ -14,31 +14,19 @@ cmd_list::run() {
     return 0
   fi
 
-  local -a descs
-  local max_len=0 pkg desc
+  local pkg desc
   for pkg in "${pkgs[@]}"; do
     desc="$(repo::pkg_description "$dots_dir" "$pkg")"
-    descs+=("$desc")
-    if [[ -n "$desc" && ${#pkg} -gt $max_len ]]; then
-      max_len=${#pkg}
-    fi
-  done
-
-  local i pad
-  for ((i = 0; i < ${#pkgs[@]}; i++)); do
-    pkg="${pkgs[$i]}"
-    desc="${descs[$i]}"
     if [[ -n "$desc" ]]; then
-      pad=$((max_len - ${#pkg}))
-      printf '  %s-%s %s%s%s%*s  %s%s%s\n' \
-        "$(theme::muted)" "$(theme::reset)" \
-        "$(theme::info)" "$pkg" "$(theme::reset)" \
-        "$pad" "" \
-        "$(theme::subtext)" "$desc" "$(theme::reset)"
+      printf '%s[i]%s %s%s%s %s(%s)%s\n' \
+        "$(theme::info)" "$(theme::reset)" \
+        "$(theme::text)" "$pkg" "$(theme::reset)" \
+        "$(theme::muted)" "$desc" "$(theme::reset)"
     else
-      printf '  %s-%s %s%s%s\n' \
-        "$(theme::muted)" "$(theme::reset)" \
-        "$(theme::info)" "$pkg" "$(theme::reset)"
+      printf '%s[!]%s %s%s%s %s(%s)%s\n' \
+        "$(theme::warning)" "$(theme::reset)" \
+        "$(theme::text)" "$pkg" "$(theme::reset)" \
+        "$(theme::muted)" "${MSG_LIST_NO_README:-no readme}" "$(theme::reset)"
     fi
   done
 }
