@@ -25,6 +25,8 @@
           # Shell script package — nothing to compile or check in the sandbox.
           dontBuild = true;
           doCheck = false;
+          # Keep man page uncompressed so the CI path test (dfy.1, not dfy.1.gz) works.
+          dontGzipMan = true;
 
           nativeBuildInputs = [ pkgs.makeWrapper ];
 
