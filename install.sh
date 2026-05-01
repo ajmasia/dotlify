@@ -45,10 +45,6 @@ _ui_muted() { printf '%s%s%s' "${_C_MUTED}" "$*" "${_C_RESET}"; }
 # --------------------------------------------------------------------------- #
 
 install::pkg_manager() {
-  if [[ "$(uname -s)" == "Darwin" ]]; then
-    command -v brew &>/dev/null && printf 'brew' || printf 'unknown'
-    return
-  fi
   if [[ ! -f "$_OS_RELEASE" ]]; then
     printf 'unknown'
     return
@@ -76,7 +72,6 @@ install::compose_cmd() {
     apt) printf 'sudo apt install -y stow figlet' ;;
     pacman) printf 'sudo pacman -S --noconfirm stow figlet' ;;
     dnf) printf 'sudo dnf install -y stow figlet' ;;
-    brew) printf 'brew install stow figlet' ;;
     *) printf '' ;;
   esac
 }
@@ -88,7 +83,7 @@ install::compose_cmd() {
 install::check_bash() {
   local bash_major="${_INSTALL_BASH_MAJOR:-${BASH_VERSINFO[0]}}"
   if ((bash_major < 4)); then
-    _ui_error "dfy requires bash >= 4 (found: $(_ui_value "$BASH_VERSION")). On macOS: brew install bash"
+    _ui_error "dfy requires bash >= 4 (found: $(_ui_value "$BASH_VERSION"))"
     exit 4
   fi
 }
@@ -174,7 +169,6 @@ install::deps() {
     apt) sudo apt install -y stow figlet ;;
     pacman) sudo pacman -S --noconfirm stow figlet ;;
     dnf) sudo dnf install -y stow figlet ;;
-    brew) brew install stow figlet ;;
   esac
 }
 

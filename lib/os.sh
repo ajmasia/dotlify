@@ -1,21 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # shellcheck shell=bash
 
-os::is_macos() {
-  [[ "$(uname -s)" == "Darwin" ]]
-}
-
-os::is_linux() {
-  [[ "$(uname -s)" == "Linux" ]]
-}
-
 # Return one of: debian ubuntu arch fedora rhel unknown.
-# Reads /etc/os-release; falls back to "unknown" on non-Linux or missing file.
+# Reads /etc/os-release; falls back to "unknown" on missing file.
 os::distro_id() {
-  if ! os::is_linux; then
-    printf 'unknown'
-    return
-  fi
   local os_release="/etc/os-release"
   if [[ ! -f "$os_release" ]]; then
     printf 'unknown'

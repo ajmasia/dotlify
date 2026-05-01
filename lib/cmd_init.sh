@@ -105,9 +105,10 @@ init::scaffold() {
 # alias cp='cp -i'
 # alias mv='mv -i'
 
-# -- System update (uncomment for your OS) --
+# -- System update --
 # alias update='sudo apt update && sudo apt upgrade'   # Debian / Ubuntu
-# alias update='brew update && brew upgrade'           # macOS
+# alias update='sudo pacman -Syu'                      # Arch
+# alias update='sudo dnf upgrade'                      # Fedora
 EOF
   _create_readme_template "bash-aliases" \
     "Bash aliases for navigation, safety, and system updates." \
@@ -129,9 +130,10 @@ EOF
 # alias cp='cp -i'
 # alias mv='mv -i'
 
-# -- System update (uncomment for your OS) --
+# -- System update --
 # alias update='sudo apt update && sudo apt upgrade'   # Debian / Ubuntu
-# alias update='brew update && brew upgrade'           # macOS
+# alias update='sudo pacman -Syu'                      # Arch
+# alias update='sudo dnf upgrade'                      # Fedora
 EOF
   _create_readme_template "zsh-aliases" \
     "Zsh aliases for navigation, safety, and system updates." \

@@ -1,6 +1,6 @@
 # Dotlify
 
-A Bash framework on top of [GNU Stow](https://www.gnu.org/software/stow/) for managing dotfiles on Linux and macOS.
+A Bash framework on top of [GNU Stow](https://www.gnu.org/software/stow/) for managing dotfiles on Linux.
 
 ## Getting started
 
@@ -33,11 +33,10 @@ dfy init --bare --dir ~/my-dots
 
 ## Requirements
 
+- Linux (kernel ≥ 4.x)
 - Bash ≥ 4.0
 - GNU Stow ≥ 2.3.1
 - figlet
-
-> macOS ships Bash 3.2 by default — run `brew install bash` first.
 
 ## Usage
 
