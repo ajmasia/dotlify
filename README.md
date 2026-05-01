@@ -5,6 +5,7 @@
 [![Shell: bash ≥ 4](https://img.shields.io/badge/shell-bash%20%E2%89%A54-green)](https://www.gnu.org/software/bash/)
 [![Platform: Linux](https://img.shields.io/badge/platform-linux-orange)](https://kernel.org/)
 [![Version](https://img.shields.io/github/v/tag/ajmasia/dotlify?label=version)](https://github.com/ajmasia/dotlify/tags)
+[![Tests](https://img.shields.io/badge/tests-bats-purple)](https://bats-core.readthedocs.io/)
 
 A Bash framework on top of [GNU Stow](https://www.gnu.org/software/stow/) for managing dotfiles on Linux.
 
@@ -47,16 +48,21 @@ dfy init --bare --dir ~/my-dots
 ## Usage
 
 ```
-dfy apply <pkg...>           Apply packages from your dotfiles repo
-dfy unlink <pkg...>          Remove symlinks for packages
-dfy adopt <pkg>              Absorb existing files into a package
-dfy list                     List available packages
-dfy info <pkg>               Show a package's README
-dfy create <pkg>             Scaffold a new package
-dfy status                   Show current state and active profile
-dfy doctor                   Check for broken links and conflicts
-dfy update                   Pull latest changes and refresh completions
-dfy uninstall                Remove Dotlify from this system
+dfy apply <pkg...>                Apply packages from your dotfiles repo
+dfy unlink <pkg...>               Remove symlinks for packages
+dfy adopt <pkg>                   Absorb existing files into a package
+dfy list                          List available packages
+dfy info <pkg>                    Show a package's README
+dfy create <pkg>                  Scaffold a new package
+dfy init [--dir <path>] [--bare]  Bootstrap a new dotfiles repo
+dfy config get <key>              Print a config value
+dfy config set <key> <value>      Write a config value
+dfy config list                   List all config keys and current values
+dfy config edit                   Open the config file in $EDITOR
+dfy status                        Show current state and active profile
+dfy doctor                        Check for broken links and conflicts
+dfy update                        Pull latest changes and refresh completions
+dfy uninstall                     Remove Dotlify from this system
 ```
 
 Global flags: `--profile <name>`, `--dir <path>`, `--dry-run`, `--no-color`, `--yes`, `--version`, `--help`.
@@ -89,7 +95,10 @@ Dotlify reads `~/.config/dotlify/config` (INI-style). Supported keys:
 | Key | Description | Default |
 |-----|-------------|---------|
 | `dir` | Path to your dotfiles repo | `~/.dotfiles` |
-| `lang` | UI language (`en` or `es`) | system locale |
+| `lang` | UI language (`en` or `es`) | `en` |
+| `notifications` | Enable passive git-status checks | `true` |
+| `check_interval` | Seconds between git-status checks | `86400` (24 h) |
+| `remind_interval` | Seconds before showing an idle reminder | `604800` (7 days) |
 
 Environment variables override the config file and take precedence:
 
@@ -143,6 +152,7 @@ dfy --dir examples/dotfiles --profile home apply
 
 - `man dfy` — full man page (installed with `install.sh`)
 - [Wiki](https://github.com/ajmasia/dotlify/wiki) — installation, commands, configuration, profiles
+- `dfy --help` / `dfy <subcommand> --help` — inline help
 
 ## License
 

@@ -89,6 +89,16 @@ MSG_HELP_CREATE="Usage: dfy create <package>"
 MSG_SUBCMD_INIT="Bootstrap a new dotfiles repository"
 MSG_HELP_INIT="Usage: dfy init [--dir, -d <path>] [--bare]"
 
+# cmd_config.sh
+MSG_SUBCMD_CONFIG="Read or write Dotlify configuration"
+MSG_HELP_CONFIG="Usage: dfy config get <key> | set <key> <value> | list | edit"
+MSG_CONFIG_UNKNOWN_VERB="Unknown config verb: %s"
+MSG_CONFIG_GET_USAGE="Usage: dfy config get <key>"
+MSG_CONFIG_SET_USAGE="Usage: dfy config set <key> <value>"
+MSG_CONFIG_SET_OK="Set %s = %s"
+MSG_CONFIG_KEY_UNSET="'%s' is not set (default: %s)"
+MSG_CONFIG_EDIT_NO_EDITOR="EDITOR is not set. Set it in your shell profile to use 'dfy config edit'."
+
 # cmd_status.sh
 MSG_STATUS_DOTFILES="Dotfiles: %s"
 MSG_STATUS_LINKED="Linked packages (%s):"

@@ -8,7 +8,7 @@ The format is plain `key=value` lines; lines starting with `#` and blank lines a
 | Key | Default | Description |
 |-----|---------|-------------|
 | `dir` | `~/.dotfiles` | Path to your dotfiles repository |
-| `lang` | system locale | UI language: `en` or `es` |
+| `lang` | `en` | UI language: `en` or `es` |
 | `notifications` | `true` | Enable passive git-status checks after each invocation |
 | `check_interval` | `86400` | Seconds between git-status checks (24 h) |
 | `remind_interval` | `604800` | Seconds before showing an idle reminder (7 days) |

@@ -55,6 +55,8 @@ source "${DFY_LIB}/config.sh"
 # shellcheck source=/dev/null
 source "${DFY_LIB}/cmd_init.sh"
 # shellcheck source=/dev/null
+source "${DFY_LIB}/cmd_config.sh"
+# shellcheck source=/dev/null
 source "${DFY_LIB}/notify.sh"
 
 # Pre-load English so error messages during flag parsing have MSG_* values.

@@ -130,11 +130,14 @@ Pull the latest changes from the Dotlify clone and refresh shell completions.
 ## dfy config
 
 ```
-dfy config get <key>
-dfy config set <key> <value>
+dfy config get <key>           # print the current value (shows default if unset)
+dfy config set <key> <value>   # write or update a key
+dfy config list                # list all keys with current value and default
+dfy config edit                # open the config file in $EDITOR
 ```
 
-Read or write a key from `~/.config/dotlify/config`. See [Configuration](Configuration) for supported keys.
+Supported keys: `dir`, `lang`, `notifications`, `check_interval`, `remind_interval`.
+See [Configuration](Configuration) for descriptions and defaults.
 
 ---
 

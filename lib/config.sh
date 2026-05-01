@@ -35,7 +35,7 @@ config::set() {
   if grep -q "^${key}=" "$cf" 2>/dev/null; then
     local tmp
     tmp="$(mktemp)"
-    grep -v "^${key}=" "$cf" >"$tmp"
+    grep -v "^${key}=" "$cf" >"$tmp" || true
     printf '%s=%s\n' "$key" "$value" >>"$tmp"
     mv "$tmp" "$cf"
   else

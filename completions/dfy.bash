@@ -46,13 +46,13 @@ _dfy_complete() {
   prev="${COMP_WORDS[COMP_CWORD - 1]}"
   subcmd=""
 
-  local -a subcommands=(apply unlink adopt list info create init status doctor update uninstall help)
+  local -a subcommands=(apply unlink adopt list info create init config status doctor update uninstall help)
   local -a global_flags=(--help -h --version -V --no-color --dry-run --profile -p --yes -y --dir -d --lang -l)
 
   local i
   for ((i = 1; i < COMP_CWORD; i++)); do
     case "${COMP_WORDS[i]}" in
-      apply | unlink | adopt | list | info | create | init | status | doctor | update | uninstall | help)
+      apply | unlink | adopt | list | info | create | init | config | status | doctor | update | uninstall | help)
         subcmd="${COMP_WORDS[i]}"
         break
         ;;
@@ -99,6 +99,9 @@ _dfy_complete() {
       local -a packages
       mapfile -t packages < <(_dfy_packages "$dots_dir")
       mapfile -t COMPREPLY < <(compgen -W "${packages[*]}" -- "$cur")
+      ;;
+    config)
+      mapfile -t COMPREPLY < <(compgen -W "get set list edit" -- "$cur")
       ;;
   esac
 }

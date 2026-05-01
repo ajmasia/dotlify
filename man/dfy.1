@@ -110,10 +110,20 @@ Remove the \fBdfy\fR symlink, shell completions, man page, and
 optionally the clone directory and configuration.
 .
 .SS dfy config get \fIKEY\fR
-Print the value of a configuration key.
+Print the current value of a configuration key.
+If the key is not set, prints the default value.
 .
 .SS dfy config set \fIKEY\fR \fIVALUE\fR
-Write a key-value pair to the configuration file.
+Write or update a key-value pair in the configuration file.
+Creates the file if it does not exist.
+.
+.SS dfy config list
+Print all supported configuration keys with their current value and default.
+.
+.SS dfy config edit
+Open the configuration file in \fI$EDITOR\fR.
+Creates the file with a comment header if it does not exist.
+Exits with code 1 when \fI$EDITOR\fR is not set.
 .
 .SH FILES
 .TP
@@ -124,12 +134,14 @@ Supported keys:
 .TP
 .B dir
 Path to the dotfiles repository (default: \fI~/.dotfiles\fR).
+Use \fBdfy config set dir <path>\fR or the \fB--dir\fR flag to override.
 .TP
 .B lang
-UI language: \fBen\fR or \fBes\fR.
+UI language: \fBen\fR (default) or \fBes\fR.
 .TP
 .B notifications
 Enable passive git-status checks: \fBtrue\fR (default) or \fBfalse\fR.
+Set to \fBfalse\fR to silence all passive warnings.
 .TP
 .B check_interval
 Seconds between git-status checks (default: \fB86400\fR, i.e.\& 24 h).
