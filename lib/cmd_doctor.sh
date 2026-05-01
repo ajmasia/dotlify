@@ -36,6 +36,30 @@ cmd_doctor::run() {
     fi
   fi
 
+  # Git repository health checks.
+  if ! git -C "$dots_dir" rev-parse --is-inside-work-tree &>/dev/null; then
+    ui::warn "${MSG_DOCTOR_NOT_GIT:-Dotfiles directory is not a git repository.}"
+    issues=$((issues + 1))
+  else
+    if [[ -n "$(git -C "$dots_dir" status --porcelain 2>/dev/null)" ]]; then
+      ui::warn "${MSG_DOCTOR_UNCOMMITTED:-Dotfiles repo has uncommitted changes.}"
+      issues=$((issues + 1))
+    fi
+    if [[ -z "$(git -C "$dots_dir" remote 2>/dev/null)" ]]; then
+      ui::warn "${MSG_DOCTOR_NO_REMOTE:-Dotfiles repo has no remote configured (no offsite backup).}"
+      issues=$((issues + 1))
+    else
+      local ahead
+      ahead="$(git -C "$dots_dir" rev-list '@{u}..HEAD' 2>/dev/null | wc -l | tr -d ' ')" || ahead=""
+      if [[ -n "$ahead" && "$ahead" -gt 0 ]]; then
+        # shellcheck disable=SC2059
+        ui::warn "$(printf "${MSG_DOCTOR_UNPUSHED:-Dotfiles repo has %s unpushed commit(s).}" \
+          "$(printf '%s%s%s' "$(theme::warning)" "$ahead" "$(theme::reset)")")"
+        issues=$((issues + 1))
+      fi
+    fi
+  fi
+
   # Broken symlinks under $HOME pointing into $DFY_DIR.
   # os::readlink_f resolves the canonical target even for broken links (all
   # but the last path component must exist, which holds for stow-managed files).

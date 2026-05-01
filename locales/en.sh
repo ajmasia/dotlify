@@ -125,6 +125,10 @@ MSG_DOCTOR_STOW_MISSING="stow is not installed."
 MSG_DOCTOR_BASH_OLD="bash < 4.0 detected (found: %s)"
 MSG_DOCTOR_STOW_OLD="stow < 2.3.1 detected (found: %s)"
 MSG_DOCTOR_BROKEN_LINK="Broken symlink: %s"
+MSG_DOCTOR_NOT_GIT="Dotfiles directory is not a git repository."
+MSG_DOCTOR_UNCOMMITTED="Dotfiles repo has uncommitted changes."
+MSG_DOCTOR_NO_REMOTE="Dotfiles repo has no remote configured (no offsite backup)."
+MSG_DOCTOR_UNPUSHED="Dotfiles repo has %s unpushed commit(s)."
 
 # cmd_update.sh
 MSG_UPDATE_PULLING="Pulling latest changes..."
