@@ -6,6 +6,15 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.8.0] — 2026-05-01
+
+### Changed
+- Project renamed from OpenDots to **Dotlify**; binary renamed from `opendots` to `dfy`.
+- Environment variables renamed from `DOTS_*` to `DFY_*` (`DFY_DIR`, `DFY_PROFILE`, `DFY_LANG`, `DFY_DRY_RUN`, `DFY_YES`, `DFY_NO_COLOR`).
+- Config directory moved from `~/.config/opendots/` to `~/.config/dotlify/`.
+- Completion scripts renamed to `dfy.bash` and `_dfy`.
+- Version constant renamed from `OPENDOTS_VERSION` to `DOTLIFY_VERSION`.
+
 ## [0.7.7] — 2026-04-30
 
 ### Changed
