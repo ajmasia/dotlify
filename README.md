@@ -139,6 +139,11 @@ dfy --dir examples/dotfiles list
 dfy --dir examples/dotfiles --profile home apply
 ```
 
+## Documentation
+
+- `man dfy` — full man page (installed with `install.sh`)
+- [Wiki](https://github.com/ajmasia/dotlify/wiki) — installation, commands, configuration, profiles
+
 ## License
 
 GPL-3.0-or-later — see [LICENSE](LICENSE).
