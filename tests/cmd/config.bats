@@ -5,6 +5,7 @@ setup() {
   # shellcheck source=tests/test_helper.bash
   source "${BATS_TEST_DIRNAME}/../../tests/test_helper.bash"
   setup_home
+  export XDG_CONFIG_HOME="${HOME}/.config"
   DOTS_BIN="${BATS_TEST_DIRNAME}/../../bin/dfy"
   export THEME_COLORS_ENABLED=0
   unset EDITOR
@@ -39,9 +40,9 @@ teardown() {
 }
 
 @test "config get shows unset message when key is absent" {
-  run "$DOTS_BIN" config get notifications
+  run "$DOTS_BIN" config get dir
   [ "$status" -eq 0 ]
-  [[ "$output" == *"not set"* ]] || [[ "$output" == *"unset"* ]] || [[ "$output" == *"notifications"* ]]
+  [[ "$output" == *"not set"* ]] || [[ "$output" == *"unset"* ]] || [[ "$output" == *"dir"* ]]
 }
 
 @test "config get with no key exits 2" {

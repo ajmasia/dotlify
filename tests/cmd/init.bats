@@ -107,7 +107,7 @@ teardown() {
   grep -q "^dir=${INIT_DIR}$" "$config_file"
 }
 
-@test "config contains all default keys after successful run" {
+@test "config contains behavioural defaults after successful run" {
   run "$DOTS_BIN" --dir "$INIT_DIR" init --bare
   [ "$status" -eq 0 ]
   local config_file="${HOME}/.config/dotlify/config"
@@ -115,13 +115,6 @@ teardown() {
   grep -q "^notifications=" "$config_file"
   grep -q "^check_interval=" "$config_file"
   grep -q "^remind_interval=" "$config_file"
-}
-
-@test "config dir uses resolved HOME path, not literal tilde" {
-  run "$DOTS_BIN" --dir "$INIT_DIR" init --bare
-  [ "$status" -eq 0 ]
-  local config_file="${HOME}/.config/dotlify/config"
-  ! grep -q "^dir=~" "$config_file"
 }
 
 @test "config::set is not called when git init fails" {

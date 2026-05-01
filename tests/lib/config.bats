@@ -17,21 +17,19 @@ teardown() {
 
 # ---------- config::write_defaults ------------------------------------------
 
-@test "write_defaults writes all known keys" {
+@test "write_defaults writes behavioural keys" {
   config::write_defaults
   local cf="${XDG_CONFIG_HOME}/dotlify/config"
   grep -q "^lang=" "$cf"
   grep -q "^notifications=" "$cf"
   grep -q "^check_interval=" "$cf"
   grep -q "^remind_interval=" "$cf"
-  grep -q "^dir=" "$cf"
 }
 
-@test "write_defaults uses resolved HOME for dir, no literal tilde" {
+@test "write_defaults does not write dir" {
   config::write_defaults
   local cf="${XDG_CONFIG_HOME}/dotlify/config"
-  ! grep -q "^dir=~" "$cf"
-  grep -q "^dir=${HOME}" "$cf"
+  ! grep -q "^dir=" "$cf"
 }
 
 @test "write_defaults does not overwrite existing keys" {

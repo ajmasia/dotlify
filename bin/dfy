@@ -65,6 +65,9 @@ i18n::load "en"
 # Parse global flags; fills DFY_SUBCMD, DFY_SUBCMD_ARGS, and other globals.
 args::parse_global "$@"
 
+# Populate missing config keys with their defaults on every startup.
+config::write_defaults
+
 # Resolve language: --lang flag > config file > en.
 _dfy_lang="${DFY_LANG:-$(i18n::configured_lang)}"
 _dfy_lang="${_dfy_lang:-en}"

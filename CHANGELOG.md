@@ -6,6 +6,15 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.11.3] — 2026-05-01
+
+### Changed
+- `config::write_defaults` no longer writes `dir` — it must be set explicitly via `dfy init` or `dfy config set dir` since it must point to a real dotfiles repository. Only behavioural keys are written on startup: `lang`, `notifications`, `check_interval`, `remind_interval`.
+- `config::write_defaults` is now called at `bin/dfy` startup so defaults are populated on the very first `dfy` invocation, even without running `dfy init`.
+
+### Fixed
+- `tests/cmd/config.bats` now sets `XDG_CONFIG_HOME` explicitly in setup, preventing test failures in CI environments where `XDG_CONFIG_HOME` is pre-defined.
+
 ## [0.11.2] — 2026-05-01
 
 ### Added

@@ -18,18 +18,18 @@ config::get() {
   fi
 }
 
-# Write default values for all known keys that are not already set.
-# dir is written with the resolved $HOME path so no literal ~ appears.
+# Write default values for behavioural keys not already set.
+# dir is intentionally excluded — it must be set explicitly via dfy init
+# or dfy config set dir, since it must point to a real dotfiles repo.
 config::write_defaults() {
   local -A defaults=(
-    [dir]="${HOME}/.dotfiles"
     [lang]="en"
     [notifications]="true"
     [check_interval]="86400"
     [remind_interval]="604800"
   )
   local key
-  for key in dir lang notifications check_interval remind_interval; do
+  for key in lang notifications check_interval remind_interval; do
     local current
     current="$(config::get "$key")"
     if [[ -z "$current" ]]; then

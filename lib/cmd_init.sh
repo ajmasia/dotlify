@@ -234,7 +234,6 @@ cmd_init::run() {
   fi
 
   config::set dir "$target"
-  config::write_defaults
 
   ui::info "${MSG_INIT_REMOTE_HINT:-Link your repo to a remote when ready:}"
   printf '  cd %s\n' "$target"
