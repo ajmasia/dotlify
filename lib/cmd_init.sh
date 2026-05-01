@@ -6,7 +6,7 @@ init::write_readme_bare() {
   cat >"${dir}/README.md" <<'EOF'
 # My Dotfiles
 
-Managed with [Dotlify](https://github.com/ajmasia/dotlify).
+[![Managed with Dotlify](https://img.shields.io/badge/dotfiles-dotlify-cba6f7)](https://github.com/ajmasia/dotlify)
 
 ## Getting started
 
@@ -40,7 +40,7 @@ init::write_readme_scaffold() {
   cat >"${dir}/README.md" <<'EOF'
 # My Dotfiles
 
-Managed with [Dotlify](https://github.com/ajmasia/dotlify).
+[![Managed with Dotlify](https://img.shields.io/badge/dotfiles-dotlify-cba6f7)](https://github.com/ajmasia/dotlify)
 
 ## Packages
 
