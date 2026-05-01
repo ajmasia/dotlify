@@ -6,6 +6,19 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.11.8] — 2026-05-01
+
+### Added
+- `flake.nix`: Nix flake with `packages`, `apps`, and `devShells` outputs for `x86_64-linux`, `aarch64-linux`, `x86_64-darwin`, and `aarch64-darwin`. Runtime deps (`bash` ≥ 4, `stow`, `figlet`) are bundled via `wrapProgram`; shebang is patched to the Nix bash.
+- `lib/os.sh`: `os::is_nix_store()` — detects a Nix store installation via `DFY_LIB` prefix or `_DFY_NIX=1` test override.
+- `dfy update` and `dfy uninstall` show the correct Nix command (`nix profile upgrade dotlify` / `nix profile remove dotlify`) when running from a Nix store path.
+- CI: new `nix-build` job runs `nix build` and smoke-tests `dfy --version` on `ubuntu-latest`.
+
+### Changed
+- `bin/dfy`: `DFY_LIB` path resolution is skipped when the variable is already set, allowing Nix and tests to supply it directly.
+- `man/dfy.1`: added `NIX INSTALLATION` section; documented `update`/`uninstall` Nix behaviour.
+- `README.md`, `docs/wiki/Installation.md`: added Nix installation, upgrade, remove, Home Manager, and `nix run` instructions.
+
 ## [0.11.7] — 2026-05-01
 
 ### Added
