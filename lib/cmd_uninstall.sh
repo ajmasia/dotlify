@@ -14,12 +14,14 @@ cmd_uninstall::run() {
   local bin_link="$HOME/.local/bin/dfy"
   local bash_comp="$HOME/.local/share/bash-completion/completions/dfy"
   local zsh_comp="$HOME/.local/share/zsh/site-functions/_dfy"
+  local man_page="$HOME/.local/share/man/man1/dfy.1"
   local config_dir="${XDG_CONFIG_HOME:-${HOME}/.config}/dotlify"
   local answer
 
   [[ -L "$bin_link" ]] && rm "$bin_link" && ui::ok "$(printf 'Removed: %s%s%s' "$(theme::accent)" "$bin_link" "$(theme::reset)")"
   [[ -f "$bash_comp" ]] && rm "$bash_comp" && ui::ok "$(printf 'Removed: %s%s%s' "$(theme::accent)" "$bash_comp" "$(theme::reset)")"
   [[ -f "$zsh_comp" ]] && rm "$zsh_comp" && ui::ok "$(printf 'Removed: %s%s%s' "$(theme::accent)" "$zsh_comp" "$(theme::reset)")"
+  [[ -f "$man_page" ]] && rm "$man_page" && ui::ok "$(printf 'Removed: %s%s%s' "$(theme::accent)" "$man_page" "$(theme::reset)")"
 
   if [[ -d "$config_dir" ]]; then
     answer="y"
@@ -28,10 +30,10 @@ cmd_uninstall::run() {
       # shellcheck disable=SC2059
       ui::ask "$(printf "${MSG_UNINSTALL_CONFIG:-Remove config directory %s? [y/N]}" \
         "$(printf '%s%s%s' "$(theme::accent)" "$config_dir" "$(theme::reset)")")"
-      read -r answer
+      read -r answer || true
       printf '\n'
     fi
-    if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
+    if [[ "$answer" == [YySs] ]]; then
       rm -rf "$config_dir"
       ui::ok "$(printf 'Removed: %s%s%s' "$(theme::accent)" "$config_dir" "$(theme::reset)")"
     else
@@ -48,10 +50,10 @@ cmd_uninstall::run() {
       # shellcheck disable=SC2059
       ui::ask "$(printf "${MSG_UNINSTALL_CLONE:-Remove clone directory %s? [y/N]}" \
         "$(printf '%s%s%s' "$(theme::accent)" "$clone_dir" "$(theme::reset)")")"
-      read -r answer
+      read -r answer || true
       printf '\n'
     fi
-    if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
+    if [[ "$answer" == [YySs] ]]; then
       rm -rf "$clone_dir"
       ui::ok "$(printf 'Removed: %s%s%s' "$(theme::accent)" "$clone_dir" "$(theme::reset)")"
     fi

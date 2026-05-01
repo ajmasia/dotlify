@@ -44,7 +44,10 @@ cmd_unlink::run() {
       stow_args+=(-n -v)
     fi
     stow_args+=("$pkg")
-    stow "${stow_args[@]}" 2>/dev/null || true
+    local _err
+    if ! _err="$(stow "${stow_args[@]}" 2>&1)"; then
+      printf '%s\n' "$_err" >&2
+    fi
     # shellcheck disable=SC2059
     ui::ok "$(printf "${MSG_UNLINK_OK:-Unlinked: %s}" "$pkg")"
   done

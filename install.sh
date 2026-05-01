@@ -221,7 +221,11 @@ install::clone_or_update() {
   if [[ -d "${dest}/.git" ]]; then
     _ui_step "Updating existing clone at $(_ui_value "$dest") ..." >&2
     printf '\n' >&2
-    git -C "$dest" pull --ff-only >&2
+    git -C "$dest" pull --ff-only >&2 \
+      || {
+        _ui_error "Update failed. Check your network or run: git -C $dest pull"
+        exit 1
+      }
   else
     _ui_step "Cloning Dotlify to $(_ui_value "$dest") ..." >&2
     printf '\n' >&2

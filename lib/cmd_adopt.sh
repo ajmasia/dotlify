@@ -50,7 +50,7 @@ cmd_adopt::run() {
     local answer
     read -r answer
     printf '\n'
-    if [[ "$answer" != [Yy]* ]]; then
+    if [[ "$answer" != [YySs]* ]]; then
       ui::info "${MSG_ADOPT_ABORTED}"
       exit 1
     fi

@@ -228,7 +228,7 @@ cmd_init::run() {
     ui::warn "$(printf "${MSG_INIT_CONFIG_OVERWRITE:-Config already has dir=%s. Overwrite? [y/N] }" "$existing_dir")"
     local answer=""
     IFS= read -r answer || true
-    if [[ "$answer" != "y" && "$answer" != "Y" ]]; then
+    if [[ "$answer" != [YySs] ]]; then
       # shellcheck disable=SC2059
       ui::info "$(printf "${MSG_INIT_DONE:-Dotfiles repo ready at %s}" "$target")"
       return 0

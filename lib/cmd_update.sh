@@ -18,7 +18,9 @@ cmd_update::run() {
   fi
 
   ui::step "${MSG_UPDATE_PULLING:-Pulling latest changes...}"
+  printf '\n'
   git -C "$clone_dir" pull --ff-only
+  printf '\n'
 
   local bash_comp="$HOME/.local/share/bash-completion/completions/dfy"
   local zsh_comp="$HOME/.local/share/zsh/site-functions/_dfy"

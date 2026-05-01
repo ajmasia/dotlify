@@ -6,6 +6,18 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.12.0] — 2026-05-01
+
+### Fixed
+- `cmd_adopt.sh`, `cmd_uninstall.sh`, `cmd_init.sh`: prompts in Spanish locale now accept `s`/`S` (sí) in addition to `y`/`Y`; the displayed `[s/N]` hint now works as expected.
+- `cmd_uninstall.sh`: the man page (`~/.local/share/man/man1/dfy.1`) is now removed on uninstall; it was previously left behind.
+- `cmd_uninstall.sh`: `read` on interactive prompts now handles EOF gracefully (`|| true`) so piped or non-interactive use exits 0.
+- `cmd_unlink.sh`: stow errors are no longer silently discarded; real errors are forwarded to stderr while the already-unlinked no-op remains silent.
+- `install.sh`: a failed `git pull --ff-only` during update now exits 1 with a clear error message instead of aborting silently.
+
+### Changed
+- `cmd_update.sh`: git pull output is now surrounded by blank lines for visual separation from the `[>]`/`[+]` status messages.
+
 ## [0.11.14] — 2026-05-01
 
 ### Changed

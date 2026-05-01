@@ -139,3 +139,18 @@ _with_missing() {
   [[ -f "${HOME}/.local/share/bash-completion/completions/dfy" ]]
   [[ -f "${HOME}/.local/share/zsh/site-functions/_dfy" ]]
 }
+
+# ---------- clone_or_update pull failure --------------------------------------
+
+@test "clone_or_update exits 1 with message when git pull fails" {
+  printf '#!/usr/bin/env bash\nexit 1\n' >"${FAKE_BIN}/git"
+  chmod +x "${FAKE_BIN}/git"
+
+  local fake_clone="${BATS_TEST_TMPDIR}/dotlify-clone"
+  mkdir -p "${fake_clone}/.git"
+  DOTLIFY_CLONE_DIR="$fake_clone"
+
+  run install::clone_or_update
+  [ "$status" -eq 1 ]
+  [[ "$output" == *"Update failed"* ]]
+}
