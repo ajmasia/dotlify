@@ -1,6 +1,6 @@
 # Dotlify Wiki
 
-Dotlify (`dfy`) is a Bash framework on top of [GNU Stow](https://www.gnu.org/software/stow/) for managing dotfiles on Linux.
+Dotlify (`dfy`) is a Bash framework on top of [GNU Stow](https://www.gnu.org/software/stow/) for managing dotfiles on Linux and macOS.
 
 ## Pages
 

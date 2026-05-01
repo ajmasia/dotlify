@@ -1,5 +1,5 @@
 .\" SPDX-License-Identifier: GPL-3.0-or-later
-.TH DFY 1 "2026-05-01" "Dotlify 0.11.3" "Dotlify Manual"
+.TH DFY 1 "2026-05-01" "Dotlify 0.11.5" "Dotlify Manual"
 .
 .SH NAME
 dfy \- dotfiles manager built on GNU Stow
@@ -14,7 +14,7 @@ dfy \- dotfiles manager built on GNU Stow
 .SH DESCRIPTION
 Dotlify (\fBdfy\fR) is a Bash framework on top of
 .BR stow (8)
-for managing dotfiles on Linux.
+for managing dotfiles on Linux and macOS.
 .PP
 It organises dotfiles into packages — directories under a central
 dotfiles repository — and uses GNU Stow to create and remove symlinks
@@ -24,6 +24,8 @@ dependencies.
 .PP
 The tool requires \fBbash\fR \(>= 4, \fBstow\fR \(>= 2.3.1, and
 \fBfiglet\fR.
+On macOS, install these with Homebrew:
+.BR "brew install bash stow figlet" .
 .
 .SH GLOBAL OPTIONS
 .TP

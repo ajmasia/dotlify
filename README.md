@@ -3,11 +3,11 @@
 [![CI](https://github.com/ajmasia/dotlify/actions/workflows/ci.yml/badge.svg)](https://github.com/ajmasia/dotlify/actions/workflows/ci.yml)
 [![License: GPL-3.0-or-later](https://img.shields.io/badge/license-GPL--3.0--or--later-blue)](LICENSE)
 [![Shell: bash ≥ 4](https://img.shields.io/badge/shell-bash%20%E2%89%A54-green)](https://www.gnu.org/software/bash/)
-[![Platform: Linux](https://img.shields.io/badge/platform-linux-orange)](https://kernel.org/)
+[![Platform: Linux/macOS](https://img.shields.io/badge/platform-linux%20%7C%20macos-orange)](https://github.com/ajmasia/dotlify)
 [![Version](https://img.shields.io/github/v/tag/ajmasia/dotlify?label=version)](https://github.com/ajmasia/dotlify/tags)
 [![Tests](https://img.shields.io/badge/tests-bats-purple)](https://bats-core.readthedocs.io/)
 
-A Bash framework on top of [GNU Stow](https://www.gnu.org/software/stow/) for managing dotfiles on Linux.
+A Bash framework on top of [GNU Stow](https://www.gnu.org/software/stow/) for managing dotfiles on Linux and macOS.
 
 ## Getting started
 
@@ -40,10 +40,10 @@ dfy init --bare --dir ~/my-dots
 
 ## Requirements
 
-- Linux (kernel ≥ 4.x)
-- Bash ≥ 4.0
-- GNU Stow ≥ 2.3.1
-- figlet
+- Linux (kernel ≥ 4.x) or macOS (10.15+)
+- Bash ≥ 4.0 — macOS ships with bash 3.2; install with `brew install bash`
+- GNU Stow ≥ 2.3.1 — `brew install stow` on macOS
+- figlet — `brew install figlet` on macOS
 
 ## Usage
 

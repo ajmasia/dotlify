@@ -2,10 +2,21 @@
 
 ## Requirements
 
-- Linux (kernel ≥ 4.x)
+- Linux (kernel ≥ 4.x) or macOS (10.15+)
 - Bash ≥ 4.0
 - GNU Stow ≥ 2.3.1
 - figlet
+
+### macOS prerequisites
+
+macOS ships with bash 3.2 and does not include Stow or figlet.
+Install the required tools with [Homebrew](https://brew.sh):
+
+```bash
+brew install bash stow figlet
+```
+
+Ensure `/opt/homebrew/bin` (Apple Silicon) or `/usr/local/bin` (Intel) is in your `PATH` so the Homebrew bash is picked up.
 
 ## Quick install
 
@@ -46,6 +57,14 @@ For zsh, add to `~/.zshrc` before `compinit`:
 
 ```bash
 fpath=(~/.local/share/zsh/site-functions $fpath)
+```
+
+### macOS: man page
+
+Add the user man directory to `MANPATH` if `man dfy` returns nothing:
+
+```bash
+export MANPATH="$HOME/.local/share/man:$MANPATH"
 ```
 
 ## Updating
