@@ -6,6 +6,11 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.11.10] — 2026-05-01
+
+### Changed
+- CI: `nix-build` job now runs functional tests after `nix build` — verifies `--version`, `--help`, Spanish locale, `doctor`, `update` Nix hint, `uninstall` Nix hint, and installed man/completion files.
+
 ## [0.11.9] — 2026-05-01
 
 ### Fixed
