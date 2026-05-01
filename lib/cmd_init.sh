@@ -1,6 +1,92 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # shellcheck shell=bash
 
+init::write_readme_bare() {
+  local dir="$1"
+  cat >"${dir}/README.md" <<'EOF'
+# My Dotfiles
+
+Managed with [Dotlify](https://github.com/ajmasia/dotlify).
+
+## Getting started
+
+Create your first package and add your config files:
+
+```bash
+dfy create <package>          # scaffold a new package directory
+```
+
+Then move your existing dotfiles into it:
+
+```bash
+dfy adopt <package>           # absorb existing files from $HOME into the package
+```
+
+## Daily workflow
+
+```bash
+dfy apply <package>           # link a package's files into $HOME
+dfy unlink <package>          # remove a package's symlinks from $HOME
+dfy adopt <package>           # absorb existing $HOME files into a package
+dfy create <package>          # scaffold a new package
+dfy status                    # show link state for all packages
+dfy list                      # list available packages with descriptions
+```
+EOF
+}
+
+init::write_readme_scaffold() {
+  local dir="$1"
+  cat >"${dir}/README.md" <<'EOF'
+# My Dotfiles
+
+Managed with [Dotlify](https://github.com/ajmasia/dotlify).
+
+## Packages
+
+| Package | File | Description |
+|---------|------|-------------|
+| `bash-aliases` | `~/.bash_aliases` | Bash aliases (navigation, safety, updates) |
+| `zsh-aliases` | `~/.zsh_aliases` | Zsh aliases (navigation, safety, updates) |
+| `vim` | `~/.vimrc` | Vim basic settings |
+
+Review and uncomment the lines you want, then apply a package to link it into `$HOME`:
+
+```bash
+dfy apply bash-aliases
+dfy apply zsh-aliases
+dfy apply vim
+```
+
+## Daily workflow
+
+```bash
+dfy apply <package>           # link a package's files into $HOME
+dfy unlink <package>          # remove a package's symlinks from $HOME
+dfy adopt <package>           # absorb existing $HOME files into a package
+dfy create <package>          # scaffold a new package
+dfy status                    # show link state for all packages
+dfy list                      # list available packages with descriptions
+```
+
+## Adding more dotfiles
+
+```bash
+dfy create tmux               # create a new package
+# add your files under tmux/
+dfy apply tmux                # link them into $HOME
+```
+
+Or absorb a file that already lives in `$HOME`:
+
+```bash
+dfy create nvim
+# place the file path inside nvim/ (e.g. nvim/.config/nvim/init.lua)
+dfy adopt nvim
+```
+EOF
+}
+
 init::scaffold() {
   local dir="$1"
 
@@ -23,6 +109,9 @@ init::scaffold() {
 # alias update='sudo apt update && sudo apt upgrade'   # Debian / Ubuntu
 # alias update='brew update && brew upgrade'           # macOS
 EOF
+  _create_readme_template "bash-aliases" \
+    "Bash aliases for navigation, safety, and system updates." \
+    >"${dir}/bash-aliases/README.md"
 
   mkdir -p "${dir}/zsh-aliases"
   cat >"${dir}/zsh-aliases/.zsh_aliases" <<'EOF'
@@ -43,6 +132,9 @@ EOF
 # alias update='sudo apt update && sudo apt upgrade'   # Debian / Ubuntu
 # alias update='brew update && brew upgrade'           # macOS
 EOF
+  _create_readme_template "zsh-aliases" \
+    "Zsh aliases for navigation, safety, and system updates." \
+    >"${dir}/zsh-aliases/README.md"
 
   mkdir -p "${dir}/vim"
   cat >"${dir}/vim/.vimrc" <<'EOF'
@@ -56,6 +148,9 @@ EOF
 " set hlsearch incsearch
 " set autoindent
 EOF
+  _create_readme_template "vim" \
+    "Basic Vim settings: syntax, line numbers, indentation, and search." \
+    >"${dir}/vim/README.md"
 
   cat >"${dir}/.gitignore" <<'EOF'
 *.swp
@@ -113,6 +208,9 @@ cmd_init::run() {
   if [[ "$bare" -eq 0 ]]; then
     ui::step "${MSG_INIT_SCAFFOLD:-Scaffolding starter files...}"
     init::scaffold "$target"
+    init::write_readme_scaffold "$target"
+  else
+    init::write_readme_bare "$target"
   fi
 
   # Check whether config already stores a dir value.

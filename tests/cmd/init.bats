@@ -50,6 +50,32 @@ teardown() {
   grep -q '\.DS_Store' "${INIT_DIR}/.gitignore"
 }
 
+@test "scaffold creates package READMEs from the package template" {
+  run "$DOTS_BIN" --dir "$INIT_DIR" init
+  [ "$status" -eq 0 ]
+  [[ -f "${INIT_DIR}/bash-aliases/README.md" ]]
+  [[ -f "${INIT_DIR}/zsh-aliases/README.md" ]]
+  [[ -f "${INIT_DIR}/vim/README.md" ]]
+  grep -q '# bash-aliases' "${INIT_DIR}/bash-aliases/README.md"
+  grep -q '# zsh-aliases' "${INIT_DIR}/zsh-aliases/README.md"
+  grep -q '# vim' "${INIT_DIR}/vim/README.md"
+}
+
+@test "init creates repo README.md with usage instructions" {
+  run "$DOTS_BIN" --dir "$INIT_DIR" init
+  [ "$status" -eq 0 ]
+  [[ -f "${INIT_DIR}/README.md" ]]
+  grep -q 'dfy apply' "${INIT_DIR}/README.md"
+}
+
+@test "--bare creates repo README.md without scaffold package sections" {
+  run "$DOTS_BIN" --dir "$INIT_DIR" init --bare
+  [ "$status" -eq 0 ]
+  [[ -f "${INIT_DIR}/README.md" ]]
+  grep -q 'dfy apply' "${INIT_DIR}/README.md"
+  [[ ! -f "${INIT_DIR}/bash-aliases/README.md" ]]
+}
+
 @test "config contains dir=<path> after successful run" {
   run "$DOTS_BIN" --dir "$INIT_DIR" init --bare
   [ "$status" -eq 0 ]
