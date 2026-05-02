@@ -6,6 +6,13 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.0] — 2026-05-02
+
+### Fixed
+- `dfy link`: conflict detection now correctly ignores files inside Stow-folded directory symlinks, preventing false positives when re-linking a package after adding files alongside an already-linked subdirectory.
+- `dfy link`: conflict output now shows two actionable remedies — a `rm` command to replace with the package version, and a `dfy adopt` command to absorb the existing files into the package.
+- `dfy adopt`: no longer proposes files already managed by Stow via directory tree folding.
+
 ## [0.12.3] — 2026-05-01
 
 ### Fixed
