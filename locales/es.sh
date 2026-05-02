@@ -58,6 +58,8 @@ MSG_APPLY_CONFLICT="Conflicto: el archivo destino ya existe (no es un enlace):"
 MSG_LINK_CONFLICT_OPT_DELETE="Para reemplazar con la versión del paquete, elimina y vuelve a enlazar:"
 MSG_LINK_CONFLICT_OPT_ADOPT="Para conservar los archivos existentes y moverlos al paquete:"
 MSG_LINK_OK="Enlazado: %s"
+MSG_LINK_NO_FILES="El paquete no tiene archivos para enlazar: %s"
+MSG_LINK_NO_FILES_HINT="Ejecuta 'dfy adopt %s' para importar los archivos de configuración existentes."
 
 # cmd_unlink.sh
 MSG_UNLINK_OK="Desenlazado: %s"

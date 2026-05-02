@@ -28,6 +28,41 @@ cmd_link::run() {
       exit 1
     fi
 
+    # Guard: a package with no linkable files produces no symlinks — stow
+    # silently tree-folds into existing HOME dirs and reports success.
+    # Build the linkable file list honoring .stow-local-ignore so that
+    # package-level metadata (README.md, .stow-local-ignore) is excluded
+    # from the count, matching stow's own filtering behaviour.
+    local -a _ignore_pats=()
+    local _ignore_file="${pkg_dir}/.stow-local-ignore"
+    if [[ -f "$_ignore_file" ]]; then
+      local _p
+      while IFS= read -r _p || [[ -n "$_p" ]]; do
+        [[ "$_p" =~ ^# || -z "$_p" ]] && continue
+        _ignore_pats+=("$_p")
+      done <"$_ignore_file"
+    fi
+    local -a _linkable=()
+    local _f _rel _skip _pat
+    while IFS= read -r -d '' _f; do
+      [[ "${_f##*/}" == ".stow-local-ignore" ]] && continue
+      _rel="${_f#"${pkg_dir}"/}"
+      _skip=0
+      for _pat in "${_ignore_pats[@]+"${_ignore_pats[@]}"}"; do
+        # shellcheck disable=SC2053
+        [[ "$_rel" =~ $_pat ]] && _skip=1 && break
+      done
+      [[ "$_skip" == "1" ]] && continue
+      _linkable+=("$_f")
+    done < <(find "$pkg_dir" -mindepth 1 -type f -print0 2>/dev/null)
+    if [[ ${#_linkable[@]} -eq 0 ]]; then
+      # shellcheck disable=SC2059
+      ui::warn "$(printf "${MSG_LINK_NO_FILES:-Package has no files to link: %s}" "$pkg")"
+      # shellcheck disable=SC2059
+      printf '  %s\n' "$(printf "${MSG_LINK_NO_FILES_HINT:-Run 'dfy adopt %s' first.}" "$pkg")"
+      exit 1
+    fi
+
     local -a conflicts=()
     _link_check_conflicts "$pkg_dir" conflicts
 

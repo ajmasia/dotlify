@@ -58,6 +58,8 @@ MSG_APPLY_CONFLICT="Conflict: target file already exists (not a symlink):"
 MSG_LINK_CONFLICT_OPT_DELETE="To replace with the package version, delete and re-run:"
 MSG_LINK_CONFLICT_OPT_ADOPT="To keep the existing files and move them into the package:"
 MSG_LINK_OK="Linked: %s"
+MSG_LINK_NO_FILES="Package has no files to link: %s"
+MSG_LINK_NO_FILES_HINT="Run 'dfy adopt %s' to import existing config files first."
 
 # cmd_unlink.sh
 MSG_UNLINK_OK="Unlinked: %s"

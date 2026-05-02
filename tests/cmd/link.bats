@@ -34,6 +34,13 @@ teardown() {
   [ "$status" -eq 2 ]
 }
 
+@test "link exits 1 and suggests adopt when package has only empty directories" {
+  mkdir -p "${DFY_DIR}/hyprland/.config/hypr"
+  run "$DOTS_BIN" link hyprland
+  [ "$status" -eq 1 ]
+  [[ "$output" == *"adopt"* ]]
+}
+
 @test "--dry-run link creates no symlinks" {
   make_package vim .vimrc
   run "$DOTS_BIN" --dry-run link vim
