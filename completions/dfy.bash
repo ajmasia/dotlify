@@ -59,6 +59,11 @@ _dfy_complete() {
     esac
   done
 
+  if [[ "$prev" == "--subdir" || "$prev" == "-s" ]]; then
+    mapfile -t COMPREPLY < <(compgen -d -- "$cur")
+    return
+  fi
+
   if [[ "$prev" == "--profile" || "$prev" == "-p" ]]; then
     local dots_dir
     dots_dir="$(_dfy_resolve_dir)"
@@ -88,7 +93,12 @@ _dfy_complete() {
   fi
 
   if [[ "$cur" == -* ]]; then
-    mapfile -t COMPREPLY < <(compgen -W "${global_flags[*]}" -- "$cur")
+    local -a cmd_flags=("${global_flags[@]}")
+    case "$subcmd" in
+      create) cmd_flags+=(--subdir -s) ;;
+      init) cmd_flags+=(--bare) ;;
+    esac
+    mapfile -t COMPREPLY < <(compgen -W "${cmd_flags[*]}" -- "$cur")
     return
   fi
 

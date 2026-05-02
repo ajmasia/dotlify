@@ -29,10 +29,10 @@ Initialise a new dotfiles git repository. Creates the directory, scaffolds start
 
 ---
 
-## dfy apply
+## dfy link
 
 ```
-dfy apply <pkg...> [--profile <name>]
+dfy link <pkg...> [--profile <name>]
 ```
 
 Link one or more packages into `$HOME` using stow. With `--profile`, links every package listed in the profile file.
@@ -62,7 +62,12 @@ dfy adopt <pkg> [--yes]
 
 Move existing `$HOME` files into the `<pkg>` package directory and replace them with symlinks, absorbing them into the dotfiles repository. Prompts for confirmation unless `--yes` is given.
 
-Only files that are genuinely unmanaged are proposed — files already linked by `dfy link` are skipped automatically.
+Two complementary scans build the adoption list:
+
+- **Package files**: any file already in the package whose corresponding `$HOME` path is a real file.
+- **Package directories**: all real files found recursively under any `$HOME` directory that mirrors a directory in the package. This handles the typical flow where a package is created with an empty directory scaffold (e.g. `dfy create hyprland -s .config/hypr`) before any files are placed in it.
+
+Files already managed by `dfy link` are never proposed.
 
 ---
 
@@ -128,7 +133,7 @@ Check for broken symlinks pointing into the dotfiles repository and warn about s
 dfy update
 ```
 
-Pull the latest changes from the Dotlify clone and refresh shell completions.
+Pull the latest changes from the Dotlify clone and refresh shell completions and the man page.
 
 ---
 

@@ -100,6 +100,15 @@ _dfy() {
           pkgs=("${(@f)$(_dfy_list_packages "$dots_dir")}")
           compadd -a pkgs
           ;;
+        create)
+          case "$words[CURRENT-1]" in
+            -s | --subdir) _files -/ ;;
+            *) compadd -- -s --subdir ;;
+          esac
+          ;;
+        init)
+          compadd -- --bare
+          ;;
         config)
           compadd get set list edit
           ;;

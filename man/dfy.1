@@ -1,5 +1,5 @@
 .\" SPDX-License-Identifier: GPL-3.0-or-later
-.TH DFY 1 "2026-05-01" "Dotlify 0.12.3" "Dotlify Manual"
+.TH DFY 1 "2026-05-02" "Dotlify 0.12.5" "Dotlify Manual"
 .
 .SH NAME
 dfy \- dotfiles manager built on GNU Stow
@@ -81,8 +81,19 @@ The package files in the repository are not affected.
 Move existing \fI$HOME\fR files into the \fIPKG\fR package directory
 and replace them with symlinks, absorbing them into the dotfiles
 repository.
-Only files that are genuinely unmanaged (not already linked via
-\fBdfy link\fR) are proposed for adoption.
+.PP
+Two complementary scans are used to build the adoption list.
+First, any file already present in the package whose corresponding
+\fI$HOME\fR path exists as a real file is proposed.
+Second, for every directory in the package tree, all real files found
+recursively under the matching \fI$HOME\fR directory are also proposed.
+This second scan handles the common case where a package is created
+with an empty directory scaffold (e.g.\&
+.BR "dfy create hyprland \-s .config/hypr" )
+before any files have been placed in it.
+.PP
+Files already managed by \fBdfy link\fR (i.e.\& symlinks that resolve
+into the package) are never proposed for adoption.
 .
 .SS dfy status
 Show the link status of all packages in the repository.
@@ -125,7 +136,7 @@ warn about a stow version that is too old.
 .
 .SS dfy update
 Pull the latest changes from the Dotlify clone and refresh shell
-completions.
+completions and the man page.
 .PP
 When Dotlify was installed via Nix, this command prints the equivalent
 Nix command instead:
