@@ -27,7 +27,7 @@ cmd_adopt::run() {
   while IFS= read -r -d '' file; do
     rel="${file#"${pkg_dir}"/}"
     target="${HOME}/${rel}"
-    if [[ -e "$target" && ! -L "$target" ]]; then
+    if [[ -e "$target" && ! -L "$target" ]] && ! _link_stow_owns_parent "$target" "$pkg_dir"; then
       to_adopt+=("$target")
     fi
   done < <(find "$pkg_dir" -mindepth 1 -type f -print0 2>/dev/null)
