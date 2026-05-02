@@ -37,7 +37,10 @@ dfy apply <pkg...> [--profile <name>]
 
 Link one or more packages into `$HOME` using stow. With `--profile`, links every package listed in the profile file.
 
-Exits with code 3 when a target already exists as a real file — use `dfy adopt` to absorb it first.
+Exits with code 3 when a target already exists as a real file. On conflict, two remedies are printed:
+
+- `rm <files> && dfy link <pkg>` — delete the conflicting files and re-link (package version wins).
+- `dfy adopt <pkg>` — move the existing files into the package (local version wins).
 
 ---
 
@@ -47,7 +50,7 @@ Exits with code 3 when a target already exists as a real file — use `dfy adopt
 dfy unlink <pkg...> [--profile <name>]
 ```
 
-Remove the symlinks created by `dfy apply`. The files in the dotfiles repository are not affected.
+Remove the symlinks created by `dfy link`. The files in the dotfiles repository are not affected.
 
 ---
 
@@ -57,7 +60,9 @@ Remove the symlinks created by `dfy apply`. The files in the dotfiles repository
 dfy adopt <pkg> [--yes]
 ```
 
-Move an existing `$HOME` file into the `<pkg>` package directory and replace it with a symlink. Prompts for confirmation unless `--yes` is given.
+Move existing `$HOME` files into the `<pkg>` package directory and replace them with symlinks, absorbing them into the dotfiles repository. Prompts for confirmation unless `--yes` is given.
+
+Only files that are genuinely unmanaged are proposed — files already linked by `dfy link` are skipped automatically.
 
 ---
 

@@ -67,17 +67,22 @@ repository.
 .
 .SS dfy link \fIPKG\fR...
 Link one or more packages into \fI$HOME\fR using \fBstow\fR.
-Aborts with exit code 3 when a target path already exists as a real
-file (run \fBdfy adopt\fR to absorb it first).
+Aborts with exit code 3 when one or more target paths already exist as
+real files.
+On conflict, two actionable remedies are printed: a \fBrm\fR command
+that deletes the conflicting files so the link can be retried, and a
+\fBdfy adopt\fR command that moves them into the package instead.
 .
 .SS dfy unlink \fIPKG\fR...
 Remove the symlinks created by \fBdfy link\fR for the given packages.
 The package files in the repository are not affected.
 .
 .SS dfy adopt \fIPKG\fR
-Move an existing \fI$HOME\fR file into the \fIPKG\fR package directory
-and replace it with a symlink, effectively absorbing it into the
-dotfiles repository.
+Move existing \fI$HOME\fR files into the \fIPKG\fR package directory
+and replace them with symlinks, absorbing them into the dotfiles
+repository.
+Only files that are genuinely unmanaged (not already linked via
+\fBdfy link\fR) are proposed for adoption.
 .
 .SS dfy status
 Show the link status of all packages in the repository.
