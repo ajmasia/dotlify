@@ -6,6 +6,14 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.12.6] — 2026-05-02
+
+### Fixed
+- `dfy adopt`: directory scan now restricted to leaf package directories, preventing intermediate dirs (e.g. `.config/`) from pulling in unrelated `$HOME` files.
+- `dfy adopt`: after moving files into the package, empty HOME directories are removed bottom-up so stow creates a directory-level symlink (`~/.config/hypr -> pkg/.config/hypr`) instead of tree-folding with individual file symlinks.
+- `dfy link`: warns and exits 1 when the package has no linkable files (only stow-ignored metadata), instead of silently reporting success while creating no symlinks.
+- `dfy unlink`: now detects and removes directory-level symlinks created by `dfy adopt`. Previously, packages linked via a directory symlink were silently skipped. The "files remain" hint now only prints when something was actually unlinked.
+
 ## [0.12.5] — 2026-05-02
 
 ### Added
