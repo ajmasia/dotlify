@@ -13,6 +13,9 @@ MSG_HELP_USAGE_LABEL="Usage:"
 MSG_HELP_USAGE_BODY="dfy [options] <subcommand> [args]"
 MSG_HELP_SUBCMDS_HEADER="Subcommands:"
 MSG_HELP_OPTS_HEADER="Global options:"
+MSG_HELP_SUBCMD_OPTS_HEADER="Options:"
+MSG_HELP_OPT_SUBDIR="Create subdirectory inside the package"
+MSG_HELP_OPT_BARE="Skip scaffold files, create bare repository"
 
 # Subcommand one-liners
 MSG_SUBCMD_LINK="Link packages from your dotfiles repo"
@@ -134,6 +137,7 @@ MSG_DOCTOR_UNPUSHED="Dotfiles repo has %s unpushed commit(s)."
 # cmd_update.sh
 MSG_UPDATE_PULLING="Pulling latest changes..."
 MSG_UPDATE_COMP="Updating shell completions..."
+MSG_UPDATE_MAN="Updating man page..."
 MSG_UPDATE_OK="Dotlify updated successfully."
 MSG_UPDATE_NOT_GIT="Not a git repository, cannot update: %s"
 MSG_UPDATE_NIX="Dotlify is managed by Nix. To upgrade, run:"

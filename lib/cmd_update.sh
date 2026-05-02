@@ -36,5 +36,11 @@ cmd_update::run() {
     cp "${clone_dir}/completions/_dfy" "$zsh_comp"
   fi
 
+  local man_dest="$HOME/.local/share/man/man1/dfy.1"
+  if [[ -f "$man_dest" && -f "${clone_dir}/man/dfy.1" ]]; then
+    ui::step "${MSG_UPDATE_MAN:-Updating man page...}"
+    cp "${clone_dir}/man/dfy.1" "$man_dest"
+  fi
+
   ui::ok "${MSG_UPDATE_OK:-Dotlify updated successfully.}"
 }

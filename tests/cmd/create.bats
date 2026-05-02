@@ -89,6 +89,7 @@ HEREDOC
   run "$DOTS_BIN" --yes create btop -s .config/btop
   [ "$status" -eq 0 ]
   [[ -d "${DFY_DIR}/btop/.config/btop" ]]
+  [[ "$output" == *"${DFY_DIR}/btop/.config/btop"* ]]
 }
 
 @test "create --subdir creates the specified subdirectory inside the package" {

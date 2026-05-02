@@ -13,6 +13,9 @@ MSG_HELP_USAGE_LABEL="Uso:"
 MSG_HELP_USAGE_BODY="dfy [opciones] <subcomando> [args]"
 MSG_HELP_SUBCMDS_HEADER="Subcomandos:"
 MSG_HELP_OPTS_HEADER="Opciones globales:"
+MSG_HELP_SUBCMD_OPTS_HEADER="Opciones:"
+MSG_HELP_OPT_SUBDIR="Crea un subdirectorio dentro del paquete"
+MSG_HELP_OPT_BARE="Omite los archivos de andamiaje, crea un repositorio vacío"
 
 # Descripciones breves de subcomandos
 MSG_SUBCMD_LINK="Enlaza paquetes de tu repositorio de dotfiles"
@@ -134,6 +137,7 @@ MSG_DOCTOR_UNPUSHED="El repositorio de dotfiles tiene %s commit(s) sin pushear."
 # cmd_update.sh
 MSG_UPDATE_PULLING="Descargando últimos cambios..."
 MSG_UPDATE_COMP="Actualizando completado de shell..."
+MSG_UPDATE_MAN="Actualizando página de manual..."
 MSG_UPDATE_OK="Dotlify actualizado correctamente."
 MSG_UPDATE_NOT_GIT="No es un repositorio git, no se puede actualizar: %s"
 MSG_UPDATE_NIX="Dotlify está gestionado por Nix. Para actualizar, ejecuta:"
