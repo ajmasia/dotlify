@@ -6,6 +6,20 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.12.5] — 2026-05-02
+
+### Added
+- `dfy create -s <subdir>`: "next steps" message now shows the full subdirectory path instead of the package root.
+- Per-subcommand `--help`: `dfy <cmd> --help` now shows the specific usage, description, and flags for that command instead of the global help.
+- Shell completions: `dfy create` now suggests `-s`/`--subdir` (with directory completion); `dfy init` now suggests `--bare`.
+
+### Fixed
+- `dfy adopt`: now also scans `$HOME` directories that mirror package directories, picking up all real files recursively. Previously, packages created with only an empty directory scaffold (e.g. `dfy create hyprland -s .config/hypr`) reported "Nothing to adopt" even when files existed in `$HOME`.
+- `dfy update`: now refreshes the man page (`~/.local/share/man/man1/dfy.1`) in addition to shell completions.
+
+### Changed
+- Man page, wiki, and completion descriptions updated to reflect new `adopt` and `update` behaviour.
+
 ## [0.12.4] — 2026-05-02
 
 ### Fixed
