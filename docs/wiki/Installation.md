@@ -117,6 +117,28 @@ Add the user man directory to `MANPATH` if `man dfy` returns nothing:
 export MANPATH="$HOME/.local/share/man:$MANPATH"
 ```
 
+## Restoring on a new machine
+
+If you already have a dotfiles repo in a remote, the setup on a new machine is:
+
+```bash
+# 1. Install Dotlify
+curl -fsSL https://raw.githubusercontent.com/ajmasia/dotlify/main/install.sh | bash
+
+# 2. Clone your existing dotfiles repo
+git clone <your-remote-url> ~/.dotfiles
+
+# 3. If the repo lives somewhere other than ~/.dotfiles, set the path
+dfy config set dir ~/my-dots
+
+# 4. Link your packages (or a profile if you use one)
+dfy link git tmux vim bash-aliases
+# or:
+dfy link --profile home
+```
+
+No `dfy init` needed — that command is only for creating a new repo from scratch.
+
 ## Updating
 
 ```bash

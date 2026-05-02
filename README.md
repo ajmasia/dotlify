@@ -26,11 +26,11 @@ git remote add origin <your-remote-url>
 git push -u origin main
 ```
 
-Then adopt your existing dotfiles or apply packages:
+Then adopt your existing dotfiles or link packages:
 
 ```bash
 dfy adopt vim       # absorb existing ~/.vimrc into the vim package
-dfy apply vim       # link the vim package back into $HOME
+dfy link vim        # link the vim package back into $HOME
 ```
 
 Use `--bare` to skip the scaffold and create only the git repo:
@@ -49,9 +49,9 @@ dfy init --bare --dir ~/my-dots
 ## Usage
 
 ```
-dfy apply <pkg...>                Apply packages from your dotfiles repo
+dfy link <pkg...>                 Link packages from your dotfiles repo into $HOME
 dfy unlink <pkg...>               Remove symlinks for packages
-dfy adopt <pkg>                   Absorb existing files into a package
+dfy adopt <pkg>                   Absorb existing $HOME files into a package
 dfy list                          List available packages
 dfy info <pkg>                    Show a package's README
 dfy create <pkg>                  Scaffold a new package

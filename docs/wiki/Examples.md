@@ -49,7 +49,7 @@ Hidden directories (`.git`, `.config`, etc.) are also excluded from package list
 Apply with:
 
 ```bash
-dfy apply git
+dfy link git
 ```
 
 This creates `~/.gitconfig` as a symlink to `~/.dotfiles/git/.gitconfig`.
@@ -77,7 +77,7 @@ bind - split-window -v
 Apply with:
 
 ```bash
-dfy apply tmux
+dfy link tmux
 ```
 
 ---
@@ -129,16 +129,16 @@ Scaffold the package with the subdirectory in one step:
 dfy create alacritty -s .config/alacritty
 ```
 
-Then either adopt the existing file from `$HOME`:
+Then either adopt the existing files from `$HOME`:
 
 ```bash
-dfy adopt alacritty ~/.config/alacritty/alacritty.toml
+dfy adopt alacritty
 ```
 
 Or place the file manually and apply:
 
 ```bash
-dfy apply alacritty
+dfy link alacritty
 # → creates ~/.config/alacritty/alacritty.toml → ~/.dotfiles/alacritty/.config/alacritty/alacritty.toml
 ```
 
@@ -166,27 +166,51 @@ vim
 Apply a profile:
 
 ```bash
-dfy apply --profile home
+dfy link --profile home
 ```
 
-## Bootstrap workflow
+## Starting from scratch
 
 ```bash
-# 1. Initialise a new dotfiles repo
-dfy init --dir ~/.dotfiles
+# 1. Install Dotlify and initialise a new dotfiles repo
+curl -fsSL https://raw.githubusercontent.com/ajmasia/dotlify/main/install.sh | bash
+dfy init
 
-# 2. Adopt existing files from $HOME
-dfy adopt git ~/.gitconfig
-dfy adopt tmux ~/.tmux.conf
+# 2. Adopt existing config files from $HOME into packages
+dfy adopt git
+dfy adopt tmux
 
-# 3. Create new packages from scratch
+# 3. Create packages for files you want to track from scratch
 dfy create vim
 dfy create bash-aliases
 
 # 4. Link everything via a profile
-dfy apply --profile home
+dfy link --profile home
 
-# 5. Check status
+# 5. Push to a remote for safekeeping
+cd ~/.dotfiles
+git remote add origin <your-remote-url>
+git push -u origin main
+```
+
+## Restoring on a new machine
+
+When Dotlify is already installed and your dotfiles live in a remote repo:
+
+```bash
+# 1. Install Dotlify
+curl -fsSL https://raw.githubusercontent.com/ajmasia/dotlify/main/install.sh | bash
+
+# 2. Clone your existing dotfiles repo
+git clone <your-remote-url> ~/.dotfiles
+
+# 3. If your repo is not at ~/.dotfiles, tell Dotlify where it is
+dfy config set dir ~/my-dots
+
+# 4. Link all packages at once via a profile
+dfy link --profile home
+
+# 5. Verify
 dfy status --profile home
 ```
 

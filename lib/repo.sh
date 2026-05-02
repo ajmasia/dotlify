@@ -126,14 +126,16 @@ repo::package_status() {
 # Insert a linked package row into the repo README Packages table.
 # Silently skips when: README absent, no Packages table, or pkg already listed.
 repo::update_readme_table() {
-  local dots_dir="$1" pkg="$2" desc="$3"
+  local dots_dir="$1" pkg="$2" desc="$3" subdir="${4:-}"
   local readme="${dots_dir}/README.md"
   [[ -f "$readme" ]] || return 0
   grep -q '| Package ' "$readme" 2>/dev/null || return 0
   grep -qF "[\`${pkg}\`]" "$readme" 2>/dev/null && return 0
 
-  local cell="${desc:-—}"
-  local new_row="| [\`${pkg}\`](${pkg}/README.md) | — | ${cell} |"
+  local file_cell="—"
+  [[ -n "$subdir" ]] && file_cell="\`~/${subdir}\`"
+  local desc_cell="${desc:-—}"
+  local new_row="| [\`${pkg}\`](${pkg}/README.md) | ${file_cell} | ${desc_cell} |"
   local tmp
   tmp="$(mktemp)"
   # shellcheck disable=SC2016

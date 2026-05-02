@@ -66,7 +66,7 @@ cmd_create::run() {
     [[ -f "${pkg_dir}/.stow-local-ignore" ]] \
       || printf '%s\n' '^README\.md$' >"${pkg_dir}/.stow-local-ignore"
     [[ -n "$subdir" ]] && mkdir -p "${pkg_dir}/${subdir}"
-    repo::update_readme_table "$dots_dir" "$pkg" "$desc"
+    repo::update_readme_table "$dots_dir" "$pkg" "$desc" "$subdir"
     # shellcheck disable=SC2059
     ui::ok "$(printf "${MSG_CREATE_README_DONE:-README created for %s}" "$pkg")"
     return 0
@@ -78,7 +78,7 @@ cmd_create::run() {
   _create_readme_template "$pkg" "$desc" >"$readme"
   printf '%s\n' '^README\.md$' >"${pkg_dir}/.stow-local-ignore"
   [[ -n "$subdir" ]] && mkdir -p "${pkg_dir}/${subdir}"
-  repo::update_readme_table "$dots_dir" "$pkg" "$desc"
+  repo::update_readme_table "$dots_dir" "$pkg" "$desc" "$subdir"
   # shellcheck disable=SC2059
   ui::ok "$(printf "${MSG_CREATE_DONE:-Package scaffolded: %s}" "$pkg")"
   printf '\n'

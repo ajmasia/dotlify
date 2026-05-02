@@ -161,7 +161,7 @@ MSG_INIT_REMOTE_HINT="Enlaza tu repositorio a un remoto cuando estés listo:"
 MSG_INIT_DONE="Repositorio de dotfiles listo en %s"
 MSG_INIT_NEXT_STEPS="Próximos pasos:"
 MSG_INIT_NEXT_REVIEW="  1. Revisa y personaliza los archivos en %s"
-MSG_INIT_NEXT_LINK="  2. Ejecuta: dfy apply <paquete>"
+MSG_INIT_NEXT_LINK="  2. Ejecuta: dfy link <paquete>"
 MSG_INIT_NEXT_ADOPT="  3. O adopta archivos existentes: dfy adopt <archivo>"
 MSG_INIT_CONFIG_OVERWRITE="La configuración ya tiene dir=%s. ¿Sobreescribir? [s/N] "
 

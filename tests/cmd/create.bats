@@ -85,6 +85,20 @@ HEREDOC
   grep -q 'mypkg/README.md' "${DFY_DIR}/README.md"
 }
 
+@test "create -s populates File/Dir cell in repo README table" {
+  cat >"${DFY_DIR}/README.md" <<'HEREDOC'
+# My Dotfiles
+
+## Packages
+
+| Package | File/Dir | Description |
+|---------|----------|-------------|
+HEREDOC
+  run "$DOTS_BIN" --yes create btop -s .config/btop
+  [ "$status" -eq 0 ]
+  grep -q '`~/.config/btop`' "${DFY_DIR}/README.md"
+}
+
 @test "create -s creates the specified subdirectory inside the package" {
   run "$DOTS_BIN" --yes create btop -s .config/btop
   [ "$status" -eq 0 ]

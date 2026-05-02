@@ -33,7 +33,7 @@ Surrounding whitespace is stripped from package names.
 Apply all packages in a profile:
 
 ```bash
-dfy apply --profile home
+dfy link --profile home
 ```
 
 Unlink all packages in a profile:
@@ -45,7 +45,7 @@ dfy unlink --profile work
 Preview what a profile would do:
 
 ```bash
-dfy --dry-run apply --profile minimal
+dfy --dry-run link --profile minimal
 ```
 
 ## Checking status with a profile
@@ -70,5 +70,5 @@ profiles/
 Then apply the right profile at bootstrap time:
 
 ```bash
-dfy apply --profile laptop
+dfy link --profile laptop
 ```

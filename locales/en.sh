@@ -161,7 +161,7 @@ MSG_INIT_REMOTE_HINT="Link your repo to a remote when ready:"
 MSG_INIT_DONE="Dotfiles repo ready at %s"
 MSG_INIT_NEXT_STEPS="Next steps:"
 MSG_INIT_NEXT_REVIEW="  1. Review and personalize the files in %s"
-MSG_INIT_NEXT_LINK="  2. Run: dfy apply <package>"
+MSG_INIT_NEXT_LINK="  2. Run: dfy link <package>"
 MSG_INIT_NEXT_ADOPT="  3. Or adopt existing files: dfy adopt <file>"
 MSG_INIT_CONFIG_OVERWRITE="Config already has dir=%s. Overwrite? [y/N] "
 

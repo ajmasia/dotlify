@@ -12,6 +12,8 @@ Dotlify (`dfy`) is a Bash framework on top of [GNU Stow](https://www.gnu.org/sof
 
 ## Quick start
 
+**First time — new dotfiles repo:**
+
 ```bash
 # Install
 curl -fsSL https://raw.githubusercontent.com/ajmasia/dotlify/main/install.sh | bash
@@ -19,11 +21,19 @@ curl -fsSL https://raw.githubusercontent.com/ajmasia/dotlify/main/install.sh | b
 # Bootstrap a dotfiles repository
 dfy init
 
-# Link a package into $HOME
-dfy apply vim
+# Absorb an existing file into a package, then link it
+dfy adopt vim
+dfy link vim
+```
 
-# Absorb an existing file into a package
-dfy adopt vim ~/.vimrc
+**Existing repo — new machine:**
+
+```bash
+# Install Dotlify, then clone your repo
+git clone <your-remote-url> ~/.dotfiles
+
+# Link everything at once
+dfy link --profile home
 ```
 
 ## License

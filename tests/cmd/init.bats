@@ -66,7 +66,7 @@ teardown() {
   run "$DOTS_BIN" --dir "$INIT_DIR" init
   [ "$status" -eq 0 ]
   [[ -f "${INIT_DIR}/README.md" ]]
-  grep -q 'dfy apply' "${INIT_DIR}/README.md"
+  grep -q 'dfy link' "${INIT_DIR}/README.md"
 }
 
 @test "scaffold README table uses linked package names" {
@@ -89,7 +89,7 @@ teardown() {
   run "$DOTS_BIN" --dir "$INIT_DIR" init --bare
   [ "$status" -eq 0 ]
   [[ -f "${INIT_DIR}/README.md" ]]
-  grep -q 'dfy apply' "${INIT_DIR}/README.md"
+  grep -q 'dfy link' "${INIT_DIR}/README.md"
   [[ ! -f "${INIT_DIR}/bash-aliases/README.md" ]]
 }
 

@@ -6,7 +6,7 @@ init::write_readme_bare() {
   cat >"${dir}/README.md" <<'EOF'
 # My Dotfiles
 
-[![Managed with Dotlify](https://img.shields.io/badge/dotfiles-dotlify-cba6f7)](https://github.com/ajmasia/dotlify)
+This repository contains my personal dotfiles [![managed with Dotlify](https://img.shields.io/badge/managed%20with-dotlify-cba6f7)](https://github.com/ajmasia/dotlify) on top of GNU Stow.
 
 ## Getting started
 
@@ -25,7 +25,7 @@ dfy adopt <package>           # absorb existing files from $HOME into the packag
 ## Daily workflow
 
 ```bash
-dfy apply <package>           # link a package's files into $HOME
+dfy link <package>            # link a package's files into $HOME
 dfy unlink <package>          # remove a package's symlinks from $HOME
 dfy adopt <package>           # absorb existing $HOME files into a package
 dfy create <package>          # scaffold a new package
@@ -40,28 +40,28 @@ init::write_readme_scaffold() {
   cat >"${dir}/README.md" <<'EOF'
 # My Dotfiles
 
-[![Managed with Dotlify](https://img.shields.io/badge/dotfiles-dotlify-cba6f7)](https://github.com/ajmasia/dotlify)
+This repository contains my personal dotfiles [![managed with Dotlify](https://img.shields.io/badge/managed%20with-dotlify-cba6f7)](https://github.com/ajmasia/dotlify) on top of GNU Stow.
 
 ## Packages
 
-| Package | File | Description |
-|---------|------|-------------|
+| Package | File/Dir | Description |
+|---------|----------|-------------|
 | [`bash-aliases`](bash-aliases/README.md) | `~/.bash_aliases` | Bash aliases (navigation, safety, updates) |
 | [`zsh-aliases`](zsh-aliases/README.md) | `~/.zsh_aliases` | Zsh aliases (navigation, safety, updates) |
 | [`vim`](vim/README.md) | `~/.vimrc` | Vim basic settings |
 
-Review and uncomment the lines you want, then apply a package to link it into `$HOME`:
+Review and personalize the files, then link a package into `$HOME`:
 
 ```bash
-dfy apply bash-aliases
-dfy apply zsh-aliases
-dfy apply vim
+dfy link bash-aliases
+dfy link zsh-aliases
+dfy link vim
 ```
 
 ## Daily workflow
 
 ```bash
-dfy apply <package>           # link a package's files into $HOME
+dfy link <package>            # link a package's files into $HOME
 dfy unlink <package>          # remove a package's symlinks from $HOME
 dfy adopt <package>           # absorb existing $HOME files into a package
 dfy create <package>          # scaffold a new package
@@ -74,7 +74,7 @@ dfy list                      # list available packages with descriptions
 ```bash
 dfy create tmux               # create a new package
 # add your files under tmux/
-dfy apply tmux                # link them into $HOME
+dfy link tmux                 # link them into $HOME
 ```
 
 Or absorb a file that already lives in `$HOME`:
@@ -248,6 +248,6 @@ cmd_init::run() {
   ui::info "${MSG_INIT_NEXT_STEPS:-Next steps:}"
   # shellcheck disable=SC2059
   printf '%s\n' "$(printf "${MSG_INIT_NEXT_REVIEW:-  1. Review and personalize the files in %s}" "$target")"
-  printf '%s\n' "${MSG_INIT_NEXT_LINK:-  2. Run: dfy apply <package>}"
+  printf '%s\n' "${MSG_INIT_NEXT_LINK:-  2. Run: dfy link <package>}"
   printf '%s\n' "${MSG_INIT_NEXT_ADOPT:-  3. Or adopt existing files: dfy adopt <file>}"
 }

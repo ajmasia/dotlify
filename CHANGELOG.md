@@ -6,6 +6,19 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.12.7] — 2026-05-02
+
+### Fixed
+- `dfy create -s`: repo README Packages table now shows `~/<subdir>` in the `File/Dir` column when `--subdir` is used; previously always showed `—`.
+- `dfy create`: repo README Packages table column header renamed from `File` to `File/Dir`.
+- `dfy init`: scaffold README now uses `dfy link` throughout; previously generated READMEs referenced the obsolete `dfy apply`.
+
+### Changed
+- Docs: all wiki pages and project README corrected from `dfy apply` to `dfy link`.
+- Docs: fixed incorrect `dfy adopt <pkg> <file>` examples; `adopt` takes only a package name.
+- Docs: added "Restoring on a new machine" workflow to Installation and Examples wiki pages.
+- Docs: `Home.md` quick start now covers both the first-time and new-machine flows.
+
 ## [0.12.6] — 2026-05-02
 
 ### Fixed
